@@ -909,6 +909,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       var ctaWrap = document.createElement('div');
       ctaWrap.style.cssText = 'text-align:center; margin-top:22px;';
       var cta = document.createElement('a');
+      cta.id = 'amd-service-modal-cta';
       cta.href = 'https://wa.me/595972542230';
       cta.target = '_blank';
       cta.rel = 'noopener';
@@ -926,10 +927,17 @@ document.addEventListener('DOMContentLoaded', async function() {
       document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
       return overlay;
     };
-    var __amdOpenServiceModal = function(html) {
+    var __amdOpenServiceModal = function(html, title) {
       var overlay = __amdEnsureServiceModal();
       var c = document.getElementById('amd-service-modal-content');
       if (c) { c.innerHTML = html; overlay.scrollTop = 0; }
+      // Prefill the WhatsApp message with the service name
+      var cta = document.getElementById('amd-service-modal-cta');
+      if (cta) {
+        cta.href = title
+          ? 'https://wa.me/595972542230?text=' + encodeURIComponent('Hola, me interesa el servicio: ' + title)
+          : 'https://wa.me/595972542230';
+      }
       overlay.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     };
@@ -1006,7 +1014,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             e.stopImmediatePropagation();
             // Only the "Ver más detalles" button does anything: it opens the modal.
             // (WhatsApp is reachable only via the "Consultar" button inside the modal.)
-            if (inDetails) __amdOpenServiceModal(__amdCardModalHTML(e.currentTarget));
+            if (inDetails) {
+              var __h3 = e.currentTarget.querySelector('h3');
+              var __title = __h3 ? (__h3.textContent || '').trim() : '';
+              __amdOpenServiceModal(__amdCardModalHTML(e.currentTarget), __title);
+            }
           }, true);
         }
       }
