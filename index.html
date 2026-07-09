@@ -568,6 +568,85 @@ document.addEventListener('DOMContentLoaded', async function() {
         '</div>';
       tarotSec.parentNode.insertBefore(sec, tarotSec.nextSibling);
     };
+    // ==========================================================================
+    //  "NUESTROS TRABAJOS" gallery (below the Pacto section).
+    //  To add an item: { img: '/foto.jpg', video: 'https://...', caption: 'texto' }
+    //   - img:     thumbnail/photo shown in the grid (required)
+    //   - video:   OPTIONAL. If present, a ▶ play button appears and the tile opens
+    //              this URL (TikTok/YouTube/etc). If omitted, the tile opens the photo.
+    //   - caption: OPTIONAL short label shown at the bottom of the tile.
+    //  NOTE: the items below are PLACEHOLDERS — reemplazar por las fotos/videos reales.
+    // ==========================================================================
+    var __amdTrabajos = [
+      { img: 'card-destrabe-altar.jpg?v=20260709c', caption: 'Trabajo de destrabe' },
+      { img: 'card-ritual.jpg?v=20260709e', caption: 'Ritual de alta potencia' },
+      { img: 'card-pacto.jpg?v=20260709e', caption: 'Pacto realizado' },
+      { img: 'card-liberacion.jpg?v=20260709e', caption: 'Liberación' }
+    ];
+    var __amdInjectTrabajos = function() {
+      if (document.getElementById('amd-trabajos-section')) return;
+      var pacto = document.getElementById('amd-pacto-section');
+      if (!pacto || !pacto.parentNode) return;
+      var sec = document.createElement('section');
+      sec.id = 'amd-trabajos-section';
+      sec.setAttribute('style', 'position: relative; z-index: 2; padding: clamp(52px, 7vw, 96px) clamp(20px, 5vw, 64px); border-top: 1px solid rgba(212,175,55,.14);');
+      var tiles = __amdTrabajos.map(function(t, i) {
+        var play = t.video
+          ? '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">' +
+              '<div style="width:56px;height:56px;border-radius:50%;background:rgba(6,4,3,.55);border:1.5px solid rgba(243,217,135,.85);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);">' +
+                '<svg viewBox="0 0 24 24" width="24" height="24" fill="#f3d987"><path d="M8 5v14l11-7z"/></svg>' +
+              '</div>' +
+            '</div>'
+          : '';
+        var cap = t.caption
+          ? '<div style="position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;background:linear-gradient(transparent,rgba(6,4,3,.9));font-family:\'Cinzel\',serif;font-size:13px;letter-spacing:.5px;color:#f3d987;">' + t.caption + '</div>'
+          : '';
+        return '<div class="amd-trabajo-tile" data-amd-trabajo="' + i + '" style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:12px;border:1px solid rgba(212,175,55,.3);cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.45);">' +
+            '<img src="' + t.img + '" alt="' + (t.caption || 'Trabajo') + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;">' +
+            play + cap +
+          '</div>';
+      }).join('');
+      sec.innerHTML =
+        '<div style="text-align:center;margin-bottom:36px;">' +
+          '<div style="font-family:\'Cinzel\',serif;font-size:12px;letter-spacing:5px;color:#d4af37;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.55);">RESULTADOS REALES</div>' +
+          '<h2 style="font-family:\'Cinzel\',serif;font-weight:800;font-size:clamp(30px,5vw,52px);line-height:1.05;margin:10px 0 8px;background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418);-webkit-background-clip:text;background-clip:text;color:transparent;">Nuestros Trabajos</h2>' +
+          '<p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(16px,2.2vw,20px);color:#d8cdb4;max-width:600px;margin:0 auto;">Mirá videos y resultados de trabajos realizados.</p>' +
+        '</div>' +
+        '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1180px;margin:0 auto;">' + tiles + '</div>';
+      pacto.parentNode.insertBefore(sec, pacto.nextSibling);
+      // hover zoom
+      sec.addEventListener('mouseover', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img'); if(im) im.style.transform='scale(1.06)'; } });
+      sec.addEventListener('mouseout', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img'); if(im) im.style.transform='scale(1)'; } });
+      // click: open video URL or a lightbox with the photo
+      sec.addEventListener('click', function(e){
+        var tile = e.target.closest('[data-amd-trabajo]'); if(!tile) return;
+        var item = __amdTrabajos[parseInt(tile.getAttribute('data-amd-trabajo'),10)];
+        if(!item) return;
+        if(item.video){ window.open(item.video, '_blank', 'noopener'); return; }
+        __amdOpenTrabajoLightbox(item.img, item.caption);
+      });
+    };
+    var __amdOpenTrabajoLightbox = function(img, caption){
+      var ov = document.getElementById('amd-trabajo-lightbox');
+      if(!ov){
+        ov = document.createElement('div');
+        ov.id = 'amd-trabajo-lightbox';
+        ov.setAttribute('style','position:fixed;inset:0;z-index:100000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.9);padding:24px;');
+        ov.innerHTML = '<div style="position:absolute;top:14px;right:22px;font-size:34px;line-height:1;color:#e8c874;cursor:pointer;user-select:none;">&times;</div>' +
+          '<figure style="margin:0;max-width:900px;max-height:90vh;text-align:center;">' +
+            '<img id="amd-trabajo-lightbox-img" src="" alt="" style="max-width:100%;max-height:82vh;border-radius:12px;border:1px solid rgba(212,175,55,.4);box-shadow:0 24px 70px rgba(0,0,0,.7);">' +
+            '<figcaption id="amd-trabajo-lightbox-cap" style="font-family:\'Cinzel\',serif;font-size:15px;letter-spacing:1px;color:#f3d987;margin-top:14px;"></figcaption>' +
+          '</figure>';
+        document.body.appendChild(ov);
+        var close = function(){ ov.style.display='none'; document.body.style.overflow=''; };
+        ov.addEventListener('click', function(e){ if(e.target===ov || e.target.innerHTML==='×') close(); });
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+      }
+      document.getElementById('amd-trabajo-lightbox-img').src = img;
+      document.getElementById('amd-trabajo-lightbox-cap').textContent = caption || '';
+      ov.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    };
     // Alta Magia: restyle the floating WhatsApp button (black/gold theme + real WA logo)
     var __amdWaSvg =
       '<svg viewBox="0 0 32 32" width="30" height="30" xmlns="http://www.w3.org/2000/svg">' +
@@ -1143,7 +1222,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     };
     var __amdRun = function() {
-      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
+      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectTrabajos(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
       __amdServicesPreview();
       __amdRemoveKickerDashes('TAROT Y TRABAJOS ESPIRITUALES');
       __amdRemoveKickerDashes('LES OFRECE');
