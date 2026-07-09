@@ -670,6 +670,11 @@ document.addEventListener('DOMContentLoaded', async function() {
       var a = document.querySelector('nav a[href="#sobre"]');
       if (a && a.textContent.trim() === 'SOBRE') a.textContent = 'SOBRE MÍ';
     };
+    // Point the "SERVICIOS" nav link at the dedicated /servicios page.
+    var __amdFixServiciosNav = function() {
+      var links = document.querySelectorAll('nav a[href="#servicios"]');
+      for (var i = 0; i < links.length; i++) { links[i].setAttribute('href', '/servicios'); }
+    };
     // Add a "Desarrollado por Neura" credit in the footer's bottom-right corner,
     // with "Neura" linking to https://neura.com.py.
     var __amdInjectNeuraCredit = function() {
@@ -1011,6 +1016,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdRemoveKickerDashes('TAROT Y TRABAJOS ESPIRITUALES');
       __amdRemoveKickerDashes('LES OFRECE');
       __amdRenameSobreNav();
+      __amdFixServiciosNav();
       __amdFixHeaderLogo();
       __amdHideMaestroCursive();
       __amdOverrideSobreImg();
