@@ -1051,7 +1051,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (!textBox.querySelector('[data-amd-details-btn]')) {
           var wrap = document.createElement('div');
           wrap.setAttribute('data-amd-details-btn', '1');
-          wrap.style.cssText = 'margin-top:14px;';
+          wrap.style.cssText = 'margin-top:auto; padding-top:14px;';
           var btn = document.createElement('div');
           btn.setAttribute('role', 'button');
           btn.textContent = 'Ver más detalles';
@@ -1059,6 +1059,12 @@ document.addEventListener('DOMContentLoaded', async function() {
           wrap.appendChild(btn);
           textBox.appendChild(wrap);
         }
+        // Pin the "Ver más detalles" button to the bottom of every card so the buttons
+        // line up across a row regardless of description length. The card's decorative
+        // corners are position:absolute, so turning the card into a flex column only
+        // affects the image + text block (both in normal flow).
+        if (card.style.display !== 'flex') { card.style.display = 'flex'; card.style.flexDirection = 'column'; }
+        if (textBox.style.flex !== '1 1 auto') { textBox.style.flex = '1 1 auto'; textBox.style.display = 'flex'; textBox.style.flexDirection = 'column'; }
         // Bind a capture-phase interceptor on the card ONCE. Capture runs before the
         // anchor's own navigation / any framework click handler, so we can reliably
         // swallow the click when it comes from our button and open the modal instead.
