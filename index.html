@@ -688,6 +688,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       var links = document.querySelectorAll('nav a[href="#servicios"]');
       for (var i = 0; i < links.length; i++) { links[i].setAttribute('href', '/servicios'); }
     };
+    // Add a "CATÁLOGO" link to the header nav (points to the dedicated /catalogo page).
+    var __amdInjectCatalogNav = function() {
+      var nav = document.querySelector('header nav');
+      if (!nav || nav.querySelector('[data-amd-catalog-nav]')) return;
+      var tmpl = nav.querySelector('a[href="#tarot"]') || nav.querySelector('a[href^="#"]');
+      if (!tmpl) return;
+      var link = tmpl.cloneNode(true);
+      link.setAttribute('data-amd-catalog-nav', '1');
+      link.setAttribute('href', '/catalogo');
+      link.textContent = 'CATÁLOGO';
+      var serv = nav.querySelector('a[href="/servicios"]') || nav.querySelector('a[href="#servicios"]');
+      if (serv) serv.parentNode.insertBefore(link, serv.nextSibling);
+      else tmpl.parentNode.insertBefore(link, tmpl.nextSibling);
+    };
     // Turn the header nav into a hamburger dropdown on small screens.
     var __amdBurgerBound = false;
     var __amdInjectHamburger = function() {
@@ -1135,6 +1149,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdRemoveKickerDashes('LES OFRECE');
       __amdRenameSobreNav();
       __amdFixServiciosNav();
+      __amdInjectCatalogNav();
       __amdInjectHamburger();
       __amdHideDiamondDivider();
       __amdFixHeaderLogo();
