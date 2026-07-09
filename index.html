@@ -578,10 +578,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     //  NOTE: the items below are PLACEHOLDERS — reemplazar por las fotos/videos reales.
     // ==========================================================================
     var __amdTrabajos = [
-      { img: 'card-destrabe-altar.jpg?v=20260709c', caption: 'Trabajo de destrabe' },
-      { img: 'card-ritual.jpg?v=20260709e', caption: 'Ritual de alta potencia' },
-      { img: 'card-pacto.jpg?v=20260709e', caption: 'Pacto realizado' },
-      { img: 'card-liberacion.jpg?v=20260709e', caption: 'Liberación' }
+      { mp4: '/trabajo-1.mp4', caption: 'Trabajo realizado' },
+      { mp4: '/trabajo-2.mp4', caption: 'Trabajo realizado' },
+      { mp4: '/trabajo-3.mp4', caption: 'Trabajo realizado' },
+      { mp4: '/trabajo-4.mp4', caption: 'Trabajo realizado' }
     ];
     var __amdInjectTrabajos = function() {
       if (document.getElementById('amd-trabajos-section')) return;
@@ -591,7 +591,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       sec.id = 'amd-trabajos-section';
       sec.setAttribute('style', 'position: relative; z-index: 2; padding: clamp(52px, 7vw, 96px) clamp(20px, 5vw, 64px); border-top: 1px solid rgba(212,175,55,.14);');
       var tiles = __amdTrabajos.map(function(t, i) {
-        var play = t.video
+        var isVid = !!(t.mp4 || t.video);
+        var play = isVid
           ? '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">' +
               '<div style="width:56px;height:56px;border-radius:50%;background:rgba(6,4,3,.55);border:1.5px solid rgba(243,217,135,.85);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);">' +
                 '<svg viewBox="0 0 24 24" width="24" height="24" fill="#f3d987"><path d="M8 5v14l11-7z"/></svg>' +
@@ -599,11 +600,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             '</div>'
           : '';
         var cap = t.caption
-          ? '<div style="position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;background:linear-gradient(transparent,rgba(6,4,3,.9));font-family:\'Cinzel\',serif;font-size:13px;letter-spacing:.5px;color:#f3d987;">' + t.caption + '</div>'
+          ? '<div style="position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;background:linear-gradient(transparent,rgba(6,4,3,.9));font-family:\'Cinzel\',serif;font-size:13px;letter-spacing:.5px;color:#f3d987;pointer-events:none;">' + t.caption + '</div>'
           : '';
-        return '<div class="amd-trabajo-tile" data-amd-trabajo="' + i + '" style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:12px;border:1px solid rgba(212,175,55,.3);cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.45);">' +
-            '<img src="' + t.img + '" alt="' + (t.caption || 'Trabajo') + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;">' +
-            play + cap +
+        var media = t.mp4
+          ? '<video src="' + t.mp4 + '#t=0.5" preload="metadata" muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;pointer-events:none;"></video>'
+          : '<img src="' + t.img + '" alt="' + (t.caption || 'Trabajo') + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;">';
+        return '<div class="amd-trabajo-tile" data-amd-trabajo="' + i + '" style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:12px;border:1px solid rgba(212,175,55,.3);cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.45);background:#0a0503;">' +
+            media + play + cap +
           '</div>';
       }).join('');
       sec.innerHTML =
@@ -615,16 +618,41 @@ document.addEventListener('DOMContentLoaded', async function() {
         '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1180px;margin:0 auto;">' + tiles + '</div>';
       pacto.parentNode.insertBefore(sec, pacto.nextSibling);
       // hover zoom
-      sec.addEventListener('mouseover', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img'); if(im) im.style.transform='scale(1.06)'; } });
-      sec.addEventListener('mouseout', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img'); if(im) im.style.transform='scale(1)'; } });
-      // click: open video URL or a lightbox with the photo
+      sec.addEventListener('mouseover', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img,video'); if(im) im.style.transform='scale(1.06)'; } });
+      sec.addEventListener('mouseout', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img,video'); if(im) im.style.transform='scale(1)'; } });
+      // click: play the video (mp4 in a lightbox, or external URL in a new tab) or open the photo
       sec.addEventListener('click', function(e){
         var tile = e.target.closest('[data-amd-trabajo]'); if(!tile) return;
         var item = __amdTrabajos[parseInt(tile.getAttribute('data-amd-trabajo'),10)];
         if(!item) return;
+        if(item.mp4){ __amdOpenTrabajoVideo(item.mp4, item.caption); return; }
         if(item.video){ window.open(item.video, '_blank', 'noopener'); return; }
         __amdOpenTrabajoLightbox(item.img, item.caption);
       });
+    };
+    // Lightbox that plays a local mp4 with controls.
+    var __amdOpenTrabajoVideo = function(mp4, caption){
+      var ov = document.getElementById('amd-trabajo-videobox');
+      if(!ov){
+        ov = document.createElement('div');
+        ov.id = 'amd-trabajo-videobox';
+        ov.setAttribute('style','position:fixed;inset:0;z-index:100001;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.92);padding:24px;');
+        ov.innerHTML = '<div data-amd-vclose style="position:absolute;top:14px;right:22px;font-size:34px;line-height:1;color:#e8c874;cursor:pointer;user-select:none;">&times;</div>' +
+          '<figure style="margin:0;max-width:520px;width:100%;text-align:center;">' +
+            '<video id="amd-trabajo-video" controls playsinline style="width:100%;max-height:82vh;border-radius:12px;border:1px solid rgba(212,175,55,.4);box-shadow:0 24px 70px rgba(0,0,0,.7);background:#000;"></video>' +
+            '<figcaption id="amd-trabajo-video-cap" style="font-family:\'Cinzel\',serif;font-size:15px;letter-spacing:1px;color:#f3d987;margin-top:14px;"></figcaption>' +
+          '</figure>';
+        document.body.appendChild(ov);
+        var closeV = function(){ var v=document.getElementById('amd-trabajo-video'); if(v){ v.pause(); } ov.style.display='none'; document.body.style.overflow=''; };
+        ov.addEventListener('click', function(e){ if(e.target===ov || (e.target.closest && e.target.closest('[data-amd-vclose]'))) closeV(); });
+        document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeV(); });
+      }
+      var v = document.getElementById('amd-trabajo-video');
+      v.src = mp4;
+      document.getElementById('amd-trabajo-video-cap').textContent = caption || '';
+      ov.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      try { v.currentTime = 0; v.play(); } catch(e){}
     };
     var __amdOpenTrabajoLightbox = function(img, caption){
       var ov = document.getElementById('amd-trabajo-lightbox');
