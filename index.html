@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       /* Hide the circular logo (exact alt match so it does not hit the "Maestro Daniel" service card) */
       'img[alt="Alta Magia Daniel"] { display: none !important; }',
       /* ...but keep the small circular logo in the header brand (top-left) */
-      'header img[alt="Alta Magia Daniel"] { display: inline-block !important; width: 46px !important; height: 46px !important; min-width: 46px !important; max-width: 46px !important; flex: 0 0 46px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; object-fit: cover !important; object-position: center 42% !important; border: 1.5px solid rgba(212,175,55,.6) !important; box-shadow: 0 0 18px rgba(212,175,55,.35) !important; }',
+      'header img[alt="Alta Magia Daniel"] { display: inline-block !important; width: 46px !important; height: 46px !important; min-width: 46px !important; max-width: 46px !important; flex: 0 0 46px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; object-fit: cover !important; object-position: center center !important; border: 1.5px solid rgba(212,175,55,.6) !important; background: #000 !important; box-shadow: 0 0 18px rgba(212,175,55,.35) !important; }',
       /* Hide the golden glow / ring that was behind the logo (and any amdGlow-animated decoration) */
       'div[style*="animation: amdGlow"] { display: none !important; }',
       /* Hide the two fixed orbiting decorative rings (amdOrbit) centered on screen */
@@ -693,6 +693,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
       }
     };
+    // Point the header brand logo at the square-cropped logo file so it shows the full
+    // circular MD logo instead of a cropped slice of the tall source image.
+    var __amdFixHeaderLogo = function() {
+      var logo = document.querySelector('header img[alt="Alta Magia Daniel"]');
+      if (logo && (logo.getAttribute('src') || '').indexOf('logo-md.jpg') === -1) {
+        logo.setAttribute('src', 'logo-md.jpg?v=20260709a');
+      }
+    };
+    // Remove the cursive "Maestro Daniel" line in the "Sobre Mí" section.
+    var __amdHideMaestroCursive = function() {
+      var ps = document.querySelectorAll('#sobre p');
+      for (var i = 0; i < ps.length; i++) {
+        if ((ps[i].textContent || '').trim() === 'Maestro Daniel') ps[i].style.display = 'none';
+      }
+    };
     // Swap the "Sobre Mí" bundled maestro photo (gray background) for the cut-out
     // version that blends with the page background.
     var __amdOverrideSobreImg = function() {
@@ -996,6 +1011,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdRemoveKickerDashes('TAROT Y TRABAJOS ESPIRITUALES');
       __amdRemoveKickerDashes('LES OFRECE');
       __amdRenameSobreNav();
+      __amdFixHeaderLogo();
+      __amdHideMaestroCursive();
       __amdOverrideSobreImg();
       __amdInjectNeuraCredit();
       __amdRemovePrivacyLink();
