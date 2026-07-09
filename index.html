@@ -1051,7 +1051,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (!textBox.querySelector('[data-amd-details-btn]')) {
           var wrap = document.createElement('div');
           wrap.setAttribute('data-amd-details-btn', '1');
-          wrap.style.cssText = 'margin-top:auto; padding-top:14px;';
+          wrap.style.cssText = 'padding-top:14px;';
+          wrap.style.setProperty('margin-top', 'auto', 'important');
           var btn = document.createElement('div');
           btn.setAttribute('role', 'button');
           btn.textContent = 'Ver más detalles';
@@ -1069,7 +1070,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           if (card.style.display !== 'flex') { card.style.display = 'flex'; card.style.flexDirection = 'column'; }
           if (textBox.style.flex !== '1 1 auto') { textBox.style.flex = '1 1 auto'; textBox.style.display = 'flex'; textBox.style.flexDirection = 'column'; }
           var __w = textBox.querySelector('[data-amd-details-btn]');
-          if (__w && __w.style.getPropertyValue('margin-top') !== 'auto') {
+          if (__w && __w.style.getPropertyPriority('margin-top') !== 'important') {
             __w.style.setProperty('margin-top', 'auto', 'important');
             __w.style.paddingTop = '14px';
           }
