@@ -675,6 +675,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       var links = document.querySelectorAll('nav a[href="#servicios"]');
       for (var i = 0; i < links.length; i++) { links[i].setAttribute('href', '/servicios'); }
     };
+    // Remove the decorative ◆ divider (diamond flanked by two gold lines) under section titles.
+    var __amdHideDiamondDivider = function() {
+      var spans = document.querySelectorAll('span');
+      for (var i = 0; i < spans.length; i++) {
+        if ((spans[i].textContent || '').trim() === '◆') {
+          var p = spans[i].parentElement;
+          if (p) p.style.setProperty('display', 'none', 'important');
+        }
+      }
+    };
     // Add a "Desarrollado por Neura" credit in the footer's bottom-right corner,
     // with "Neura" linking to https://neura.com.py.
     var __amdInjectNeuraCredit = function() {
@@ -1061,6 +1071,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdRemoveKickerDashes('LES OFRECE');
       __amdRenameSobreNav();
       __amdFixServiciosNav();
+      __amdHideDiamondDivider();
       __amdFixHeaderLogo();
       __amdHideMaestroCursive();
       __amdOverrideSobreImg();
