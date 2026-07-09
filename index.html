@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var imgBox = document.createElement('div');
         imgBox.setAttribute('style', 'height: 210px; overflow: hidden; background:#0a0503;');
         imgBox.setAttribute('data-amd-adapted', '1');
-        imgBox.innerHTML = '<img src="' + c.img + '" alt="' + c.title + '" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">';
+        imgBox.innerHTML = '<img src="' + c.img + '" alt="' + c.title + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;">';
         a.appendChild(imgBox);
         var textBox = document.createElement('div');
         textBox.setAttribute('style', 'padding: 18px 22px 24px;');
@@ -1004,9 +1004,14 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdHideConsultarLabels();
     };
     __amdRun();
-    // Observe DOM changes (React re-renders) and re-apply
+    // Observe DOM changes (React re-renders) and re-apply — debounced so a burst of
+    // mutations coalesces into a single pass instead of running __amdRun dozens of times.
     try {
-      var __amdObs = new MutationObserver(function() { __amdRun(); });
+      var __amdDebounce = null;
+      var __amdObs = new MutationObserver(function() {
+        if (__amdDebounce) return;
+        __amdDebounce = setTimeout(function() { __amdDebounce = null; __amdRun(); }, 120);
+      });
       __amdObs.observe(document.body, {childList: true, subtree: true});
     } catch(e) {}
     // Polling backup
