@@ -324,6 +324,10 @@ document.addEventListener('DOMContentLoaded', async function() {
       '#inicio a[href*="wa.me"] { display: none !important; }',
       /* Left-align the footer copyright line */
       'footer p:last-of-type { text-align: left !important; }',
+      /* Make the thin gold "kicker" labels (wide letter-spacing) bolder + add a soft
+         shadow so they read better over the busy background. Titles are h1/h2/h3, so
+         only the small span labels are affected. */
+      'span[style*="letter-spacing: 6px"], span[style*="letter-spacing: 5px"], span[style*="letter-spacing: 4px"], span[style*="letter-spacing: 3px"] { font-weight: 700 !important; text-shadow: 0 1px 3px rgba(0,0,0,.55) !important; }',
       /* Floating WhatsApp button: black/gold theme with real WA logo (CSS-only, survives React re-renders) */
       'a[aria-label="WhatsApp"] {',
       '  background: radial-gradient(circle at 30% 30%, #1a0f05, #000) !important;',
