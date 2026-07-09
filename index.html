@@ -328,6 +328,15 @@ document.addEventListener('DOMContentLoaded', async function() {
          shadow so they read better over the busy background. Titles are h1/h2/h3, so
          only the small span labels are affected. */
       'span[style*="letter-spacing: 6px"], span[style*="letter-spacing: 5px"], span[style*="letter-spacing: 4px"], span[style*="letter-spacing: 3px"] { font-weight: 700 !important; text-shadow: 0 1px 3px rgba(0,0,0,.55) !important; }',
+      /* Mobile dropdown (hamburger) menu */
+      'header { position: relative !important; }',
+      '[data-amd-burger] { display: none; cursor: pointer; user-select: none; background: transparent; border: 1px solid rgba(212,175,55,.45); border-radius: 8px; color: #e8c874; font-size: 20px; line-height: 1; padding: 7px 12px; }',
+      '@media (max-width: 760px) {',
+      '  [data-amd-burger] { display: inline-flex; align-items: center; justify-content: center; }',
+      '  header nav[data-amd-nav] { position: absolute !important; top: 100% !important; left: 0 !important; right: 0 !important; flex-direction: column !important; align-items: stretch !important; flex-wrap: nowrap !important; gap: 0 !important; background: rgba(6,4,3,.98) !important; border-top: 1px solid rgba(212,175,55,.25) !important; box-shadow: 0 18px 40px rgba(0,0,0,.6) !important; padding: 6px 22px 12px !important; display: none !important; }',
+      '  header nav[data-amd-nav].amd-nav-open { display: flex !important; }',
+      '  header nav[data-amd-nav] a { padding: 14px 4px !important; border-bottom: 1px solid rgba(212,175,55,.12) !important; font-size: 14px !important; text-align: left !important; }',
+      '}',
       /* Floating WhatsApp button: black/gold theme with real WA logo (CSS-only, survives React re-renders) */
       'a[aria-label="WhatsApp"] {',
       '  background: radial-gradient(circle at 30% 30%, #1a0f05, #000) !important;',
@@ -678,6 +687,38 @@ document.addEventListener('DOMContentLoaded', async function() {
     var __amdFixServiciosNav = function() {
       var links = document.querySelectorAll('nav a[href="#servicios"]');
       for (var i = 0; i < links.length; i++) { links[i].setAttribute('href', '/servicios'); }
+    };
+    // Turn the header nav into a hamburger dropdown on small screens.
+    var __amdBurgerBound = false;
+    var __amdInjectHamburger = function() {
+      var header = document.querySelector('header');
+      if (!header) return;
+      var nav = header.querySelector('nav');
+      if (!nav) return;
+      nav.setAttribute('data-amd-nav', '1');
+      if (!header.querySelector('[data-amd-burger]')) {
+        var burger = document.createElement('div');
+        burger.setAttribute('data-amd-burger', '1');
+        burger.setAttribute('role', 'button');
+        burger.setAttribute('aria-label', 'Menú');
+        burger.textContent = '☰';
+        burger.addEventListener('click', function(e) {
+          e.preventDefault(); e.stopPropagation();
+          var n = document.querySelector('header nav');
+          if (n) n.classList.toggle('amd-nav-open');
+        });
+        header.appendChild(burger);
+      }
+      if (!__amdBurgerBound) {
+        __amdBurgerBound = true;
+        document.addEventListener('click', function(e) {
+          var n = document.querySelector('header nav');
+          if (!n || !n.classList.contains('amd-nav-open')) return;
+          var burger = document.querySelector('[data-amd-burger]');
+          if (e.target && e.target.closest && e.target.closest('header nav a')) { n.classList.remove('amd-nav-open'); return; }
+          if (!n.contains(e.target) && e.target !== burger && !(burger && burger.contains(e.target))) { n.classList.remove('amd-nav-open'); }
+        });
+      }
     };
     // Remove the decorative ◆ divider (diamond flanked by two gold lines) under section titles.
     var __amdHideDiamondDivider = function() {
@@ -1075,6 +1116,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdRemoveKickerDashes('LES OFRECE');
       __amdRenameSobreNav();
       __amdFixServiciosNav();
+      __amdInjectHamburger();
       __amdHideDiamondDivider();
       __amdFixHeaderLogo();
       __amdHideMaestroCursive();
