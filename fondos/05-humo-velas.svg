@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-label="Velas y humo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000"/><stop offset="55%" stop-color="#0e0703"/><stop offset="100%" stop-color="#1a0f05"/>
+    </linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="100%" stop-color="#8a6a20"/>
+    </linearGradient>
+    <linearGradient id="wax" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2612"/><stop offset="100%" stop-color="#0f0803"/>
+    </linearGradient>
+    <radialGradient id="flame" cx="50%" cy="60%" r="50%">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="60%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8a3a10" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f7e394" stop-opacity=".45"/><stop offset="100%" stop-color="#f7e394" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="smoke" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 .83  0 0 0 0 .69  0 0 0 0 .22  0 0 0 .35 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="10"/></filter>
+    <symbol id="vela" viewBox="-40 -260 80 320">
+      <!-- halo -->
+      <circle cx="0" cy="-215" r="80" fill="url(#halo)" filter="url(#blur)"/>
+      <!-- llama -->
+      <path d="M0,-260 Q-14,-230 -10,-210 Q-18,-195 0,-180 Q18,-195 10,-210 Q14,-230 0,-260 Z" fill="url(#flame)"/>
+      <path d="M0,-245 Q-6,-225 0,-205 Q6,-225 0,-245 Z" fill="#fff8d6" opacity=".9"/>
+      <!-- mecha -->
+      <rect x="-.8" y="-195" width="1.6" height="10" fill="#1a0e05"/>
+      <!-- cuerpo de vela -->
+      <rect x="-22" y="-185" width="44" height="240" fill="url(#wax)" stroke="url(#g)" stroke-width=".8"/>
+      <!-- cera derretida -->
+      <path d="M-22,-160 Q-10,-152 0,-158 Q12,-150 22,-160" fill="none" stroke="url(#g)" stroke-width=".8" opacity=".6"/>
+      <path d="M-22,-135 L-18,-120 M-14,-135 L-10,-115 M6,-138 L10,-118 M16,-135 L20,-122" stroke="#f7e394" stroke-width=".4" opacity=".5"/>
+      <!-- base -->
+      <ellipse cx="0" cy="55" rx="30" ry="6" fill="#0a0503" stroke="url(#g)" stroke-width=".6"/>
+    </symbol>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- Humo -->
+  <rect width="1600" height="900" fill="#d4af37" opacity=".08" filter="url(#smoke)"/>
+
+  <!-- Estrellas -->
+  <g fill="#e8c874">
+    <circle cx="140" cy="120" r=".9" opacity=".5"/><circle cx="420" cy="80" r=".7" opacity=".45"/>
+    <circle cx="780" cy="140" r=".8" opacity=".5"/><circle cx="1140" cy="90" r="1" opacity=".55"/>
+    <circle cx="1480" cy="180" r=".8" opacity=".5"/><circle cx="240" cy="260" r=".6" opacity=".4"/>
+    <circle cx="1350" cy="320" r=".7" opacity=".45"/>
+  </g>
+
+  <!-- Marco decorativo dorado -->
+  <rect x="40" y="40" width="1520" height="820" fill="none" stroke="url(#g)" stroke-width="1" opacity=".7"/>
+  <rect x="52" y="52" width="1496" height="796" fill="none" stroke="#d4af37" stroke-width=".3" opacity=".5"/>
+
+  <!-- Simbolo mistico centro superior -->
+  <g transform="translate(800 250)" opacity=".7">
+    <circle r="60" fill="none" stroke="url(#g)" stroke-width=".8"/>
+    <circle r="40" fill="none" stroke="url(#g)" stroke-width=".6" opacity=".7"/>
+    <polygon points="0,-40 35,20 -35,20" fill="none" stroke="url(#g)" stroke-width=".8"/>
+    <circle r="4" fill="url(#g)"/>
+  </g>
+
+  <!-- Tres velas -->
+  <g transform="translate(400 720)"><use href="#vela" width="120" height="480"/></g>
+  <g transform="translate(800 700)"><use href="#vela" width="150" height="600"/></g>
+  <g transform="translate(1200 720)"><use href="#vela" width="120" height="480"/></g>
+
+  <!-- Reflejo/piso -->
+  <ellipse cx="800" cy="880" rx="700" ry="30" fill="#d4af37" opacity=".1"/>
+
+  <radialGradient id="v" cx="50%" cy="50%" r="80%"><stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".7"/></radialGradient>
+  <rect width="1600" height="900" fill="url(#v)"/>
+</svg>

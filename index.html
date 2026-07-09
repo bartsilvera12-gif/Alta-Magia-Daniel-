@@ -702,21 +702,24 @@ document.addEventListener('DOMContentLoaded', async function() {
         burger.setAttribute('role', 'button');
         burger.setAttribute('aria-label', 'Menú');
         burger.textContent = '☰';
-        burger.addEventListener('click', function(e) {
-          e.preventDefault(); e.stopPropagation();
-          var n = document.querySelector('header nav');
-          if (n) n.classList.toggle('amd-nav-open');
-        });
         header.appendChild(burger);
       }
+      // Bind ONE delegated listener on document (survives React re-renders that
+      // destroy/recreate the burger node). Handles both toggling and closing.
       if (!__amdBurgerBound) {
         __amdBurgerBound = true;
         document.addEventListener('click', function(e) {
-          var n = document.querySelector('header nav');
+          var t = e.target;
+          var onBurger = t && t.closest && t.closest('[data-amd-burger]');
+          var n = document.querySelector('header nav[data-amd-nav]') || document.querySelector('header nav');
+          if (onBurger) {
+            e.preventDefault();
+            if (n) n.classList.toggle('amd-nav-open');
+            return;
+          }
           if (!n || !n.classList.contains('amd-nav-open')) return;
-          var burger = document.querySelector('[data-amd-burger]');
-          if (e.target && e.target.closest && e.target.closest('header nav a')) { n.classList.remove('amd-nav-open'); return; }
-          if (!n.contains(e.target) && e.target !== burger && !(burger && burger.contains(e.target))) { n.classList.remove('amd-nav-open'); }
+          if (t && t.closest && t.closest('header nav a')) { n.classList.remove('amd-nav-open'); return; }
+          if (!n.contains(t)) { n.classList.remove('amd-nav-open'); }
         });
       }
     };

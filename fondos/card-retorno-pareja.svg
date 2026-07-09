@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-label="Retorno de pareja">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#2a1408"/><stop offset="60%" stop-color="#120904"/><stop offset="100%" stop-color="#050201"/>
+    </radialGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8a6a20"/>
+    </linearGradient>
+    <linearGradient id="heart" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="100%" stop-color="#a8801e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity=".45"/><stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+
+  <rect width="400" height="260" fill="url(#bg)"/>
+  <circle cx="200" cy="130" r="140" fill="url(#glow)" filter="url(#blur)"/>
+
+  <!-- Estrellas -->
+  <g fill="#e8c874">
+    <circle cx="40" cy="40" r=".9" opacity=".55"/><circle cx="360" cy="50" r="1" opacity=".6"/>
+    <circle cx="80" cy="210" r=".8" opacity=".5"/><circle cx="330" cy="220" r=".9" opacity=".55"/>
+    <circle cx="30" cy="130" r=".7" opacity=".45"/><circle cx="370" cy="140" r=".8" opacity=".5"/>
+  </g>
+
+  <!-- Anillos entrelazados de fondo -->
+  <g fill="none" stroke="url(#g)" stroke-width="1.4" opacity=".7">
+    <circle cx="160" cy="140" r="46"/>
+    <circle cx="240" cy="140" r="46"/>
+  </g>
+  <g fill="none" stroke="#d4af37" stroke-width=".4" opacity=".5">
+    <circle cx="160" cy="140" r="52"/>
+    <circle cx="240" cy="140" r="52"/>
+  </g>
+
+  <!-- Corazones enlazados -->
+  <g transform="translate(160 90)">
+    <path d="M0,50 C-40,15 -55,-15 -30,-30 C-12,-38 0,-18 0,-10 C0,-18 12,-38 30,-30 C55,-15 40,15 0,50 Z" fill="url(#heart)" opacity=".9"/>
+    <path d="M0,50 C-40,15 -55,-15 -30,-30 C-12,-38 0,-18 0,-10 C0,-18 12,-38 30,-30 C55,-15 40,15 0,50 Z" fill="none" stroke="#8a6a20" stroke-width=".8"/>
+  </g>
+  <g transform="translate(240 90)">
+    <path d="M0,50 C-40,15 -55,-15 -30,-30 C-12,-38 0,-18 0,-10 C0,-18 12,-38 30,-30 C55,-15 40,15 0,50 Z" fill="url(#heart)" opacity=".9"/>
+    <path d="M0,50 C-40,15 -55,-15 -30,-30 C-12,-38 0,-18 0,-10 C0,-18 12,-38 30,-30 C55,-15 40,15 0,50 Z" fill="none" stroke="#8a6a20" stroke-width=".8"/>
+  </g>
+
+  <!-- Flecha atravesando ambos corazones -->
+  <g stroke="url(#g)" stroke-width="1.8" opacity=".95">
+    <line x1="100" y1="115" x2="300" y2="115"/>
+  </g>
+  <!-- Punta -->
+  <polygon points="300,115 288,108 288,122" fill="url(#g)"/>
+  <!-- Plumas -->
+  <g stroke="url(#g)" stroke-width="1.2" fill="none">
+    <path d="M100,115 L88,105 M100,115 L88,115 M100,115 L88,125"/>
+  </g>
+
+  <!-- Rosas debajo -->
+  <g transform="translate(120 210)" opacity=".85">
+    <g stroke="url(#g)" stroke-width=".8" fill="none">
+      <circle r="14"/><circle r="9"/><circle r="4"/>
+      <path d="M-14,0 Q-7,-9 0,-5 Q7,-9 14,0 Q7,9 0,5 Q-7,9 -14,0 Z"/>
+    </g>
+    <circle r="2" fill="url(#g)"/>
+    <path d="M0,14 L-3,32 M0,14 L3,30" stroke="url(#g)" stroke-width=".6" opacity=".7"/>
+    <path d="M-8,26 Q-14,22 -12,18 Q-5,25 -3,32" fill="url(#g)" opacity=".3"/>
+  </g>
+  <g transform="translate(280 210)" opacity=".85">
+    <g stroke="url(#g)" stroke-width=".8" fill="none">
+      <circle r="14"/><circle r="9"/><circle r="4"/>
+      <path d="M-14,0 Q-7,-9 0,-5 Q7,-9 14,0 Q7,9 0,5 Q-7,9 -14,0 Z"/>
+    </g>
+    <circle r="2" fill="url(#g)"/>
+    <path d="M0,14 L-3,32 M0,14 L3,30" stroke="url(#g)" stroke-width=".6" opacity=".7"/>
+    <path d="M8,26 Q14,22 12,18 Q5,25 3,32" fill="url(#g)" opacity=".3"/>
+  </g>
+
+  <!-- Estrella chica arriba -->
+  <g transform="translate(200 40)" fill="url(#g)" opacity=".85">
+    <polygon points="0,-10 3,-3 10,0 3,3 0,10 -3,3 -10,0 -3,-3"/>
+  </g>
+</svg>

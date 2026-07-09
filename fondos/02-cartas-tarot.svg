@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-label="Cartas de tarot">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="60%" r="80%">
+      <stop offset="0%" stop-color="#1a1005"/><stop offset="60%" stop-color="#0a0503"/><stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="100%" stop-color="#8a6a20"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1408"/><stop offset="100%" stop-color="#0a0704"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity=".25"/><stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </radialGradient>
+    <symbol id="tcard" viewBox="0 0 100 160">
+      <rect x="2" y="2" width="96" height="156" rx="6" fill="url(#card)" stroke="url(#g)" stroke-width="1.4"/>
+      <rect x="8" y="8" width="84" height="144" rx="3" fill="none" stroke="#d4af37" stroke-width=".4" opacity=".6"/>
+      <circle cx="50" cy="55" r="18" fill="none" stroke="url(#g)" stroke-width="1"/>
+      <polygon points="50,40 55,55 50,70 45,55" fill="url(#g)" opacity=".8"/>
+      <text x="50" y="115" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#e8c874" letter-spacing="2">✦</text>
+      <text x="50" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#d4af37" letter-spacing="1.5" opacity=".75">ARCANA</text>
+    </symbol>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="800" cy="500" r="600" fill="url(#glow)"/>
+
+  <!-- Estrellas dispersas -->
+  <g fill="#e8c874">
+    <circle cx="120" cy="180" r="1" opacity=".6"/><circle cx="280" cy="90" r=".8" opacity=".5"/>
+    <circle cx="1450" cy="140" r="1.2" opacity=".7"/><circle cx="1320" cy="240" r=".7" opacity=".5"/>
+    <circle cx="90" cy="620" r=".9" opacity=".55"/><circle cx="1500" cy="700" r="1" opacity=".6"/>
+    <circle cx="410" cy="810" r=".8" opacity=".5"/><circle cx="1200" cy="820" r="1" opacity=".6"/>
+    <circle cx="60" cy="360" r=".6" opacity=".4"/><circle cx="1540" cy="420" r=".8" opacity=".5"/>
+  </g>
+
+  <!-- Abanico de 5 cartas centrado -->
+  <g transform="translate(800 500)">
+    <g transform="rotate(-24) translate(-260 -40)"><use href="#tcard" width="180" height="288"/></g>
+    <g transform="rotate(-12) translate(-155 -70)"><use href="#tcard" width="190" height="304"/></g>
+    <g transform="translate(-100 -95)"><use href="#tcard" width="200" height="320"/></g>
+    <g transform="rotate(12) translate(-35 -70)"><use href="#tcard" width="190" height="304"/></g>
+    <g transform="rotate(24) translate(80 -40)"><use href="#tcard" width="180" height="288"/></g>
+  </g>
+
+  <!-- Humo/mist en la base -->
+  <ellipse cx="800" cy="880" rx="700" ry="60" fill="#d4af37" opacity=".05"/>
+
+  <radialGradient id="v" cx="50%" cy="50%" r="80%"><stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".75"/></radialGradient>
+  <rect width="1600" height="900" fill="url(#v)"/>
+</svg>

@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-label="Paye Mamon amuleto guarani">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#1a1005"/><stop offset="55%" stop-color="#0a0503"/><stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8a6a20"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4a2a10"/><stop offset="50%" stop-color="#2a1808"/><stop offset="100%" stop-color="#1a0e05"/>
+    </linearGradient>
+    <linearGradient id="fruit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="60%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8a6a20"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity=".35"/><stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="800" cy="450" r="500" fill="url(#halo)"/>
+
+  <!-- Marco decorativo -->
+  <rect x="40" y="40" width="1520" height="820" fill="none" stroke="url(#g)" stroke-width="1" opacity=".7"/>
+  <rect x="55" y="55" width="1490" height="790" fill="none" stroke="#d4af37" stroke-width=".3" opacity=".5"/>
+
+  <!-- Estrellas -->
+  <g fill="#e8c874">
+    <circle cx="180" cy="180" r=".9" opacity=".55"/><circle cx="1420" cy="200" r="1" opacity=".6"/>
+    <circle cx="120" cy="450" r=".7" opacity=".45"/><circle cx="1480" cy="470" r=".8" opacity=".5"/>
+    <circle cx="240" cy="720" r=".8" opacity=".5"/><circle cx="1380" cy="740" r=".7" opacity=".45"/>
+  </g>
+
+  <!-- Patrones guaraníes en las esquinas (grecas) -->
+  <g stroke="url(#g)" stroke-width=".8" fill="none" opacity=".75">
+    <path d="M80,80 L140,80 L140,110 L110,110 L110,140 L80,140 Z"/>
+    <path d="M1520,80 L1460,80 L1460,110 L1490,110 L1490,140 L1520,140 Z"/>
+    <path d="M80,820 L140,820 L140,790 L110,790 L110,760 L80,760 Z"/>
+    <path d="M1520,820 L1460,820 L1460,790 L1490,790 L1490,760 L1520,760 Z"/>
+  </g>
+
+  <!-- Hojas de mamón (papaya) a los lados del amuleto -->
+  <g transform="translate(500 450)" opacity=".85">
+    <g fill="none" stroke="url(#g)" stroke-width="1">
+      <path d="M0,0 Q-60,-40 -110,-10 Q-140,10 -130,50 Q-100,80 -50,60 Q-10,40 0,0 Z"/>
+      <path d="M0,0 L-40,-25 M0,0 L-70,-5 M0,0 L-80,25 M0,0 L-60,55"/>
+      <line x1="0" y1="0" x2="80" y2="80" stroke-width="1.4"/>
+    </g>
+  </g>
+  <g transform="translate(1100 450) scale(-1 1)" opacity=".85">
+    <g fill="none" stroke="url(#g)" stroke-width="1">
+      <path d="M0,0 Q-60,-40 -110,-10 Q-140,10 -130,50 Q-100,80 -50,60 Q-10,40 0,0 Z"/>
+      <path d="M0,0 L-40,-25 M0,0 L-70,-5 M0,0 L-80,25 M0,0 L-60,55"/>
+      <line x1="0" y1="0" x2="80" y2="80" stroke-width="1.4"/>
+    </g>
+  </g>
+
+  <!-- Frutos de mamón (papaya) dorados -->
+  <g transform="translate(360 620)" opacity=".9">
+    <ellipse rx="40" ry="55" fill="url(#fruit)" stroke="#8a6a20" stroke-width=".8"/>
+    <path d="M-30,-25 Q0,-15 30,-25 M-32,0 Q0,10 32,0 M-30,25 Q0,35 30,25" fill="none" stroke="#8a6a20" stroke-width=".4" opacity=".7"/>
+    <path d="M0,-55 L-5,-65 L0,-70 L5,-65 Z" fill="url(#g)"/>
+  </g>
+  <g transform="translate(1240 620)" opacity=".9">
+    <ellipse rx="40" ry="55" fill="url(#fruit)" stroke="#8a6a20" stroke-width=".8"/>
+    <path d="M-30,-25 Q0,-15 30,-25 M-32,0 Q0,10 32,0 M-30,25 Q0,35 30,25" fill="none" stroke="#8a6a20" stroke-width=".4" opacity=".7"/>
+    <path d="M0,-55 L-5,-65 L0,-70 L5,-65 Z" fill="url(#g)"/>
+  </g>
+
+  <!-- Cordón del amuleto (cuelga desde arriba) -->
+  <g stroke="url(#g)" stroke-width="1.4" fill="none" opacity=".8">
+    <path d="M800,80 Q790,180 810,280 Q820,320 800,360"/>
+    <path d="M800,80 Q810,180 790,280 Q780,320 800,360"/>
+  </g>
+  <circle cx="800" cy="80" r="4" fill="url(#g)"/>
+
+  <!-- Payé / amuleto tallado en madera -->
+  <g transform="translate(800 500)">
+    <!-- Aureola -->
+    <circle r="220" fill="none" stroke="url(#g)" stroke-width=".5" opacity=".4" stroke-dasharray="2 5"/>
+    <circle r="190" fill="none" stroke="url(#g)" stroke-width=".8" opacity=".55"/>
+
+    <!-- Forma de puño de talismán guaraní (mano/higa) -->
+    <g>
+      <!-- fondo del amuleto -->
+      <path d="M-80,-120 Q-100,-60 -90,20 Q-70,120 0,150 Q70,120 90,20 Q100,-60 80,-120 Q40,-140 0,-135 Q-40,-140 -80,-120 Z"
+            fill="url(#wood)" stroke="url(#g)" stroke-width="1.8"/>
+
+      <!-- Borde dorado interior -->
+      <path d="M-65,-105 Q-82,-55 -75,15 Q-58,105 0,130 Q58,105 75,15 Q82,-55 65,-105 Q30,-120 0,-115 Q-30,-120 -65,-105 Z"
+            fill="none" stroke="url(#g)" stroke-width=".6" opacity=".7"/>
+
+      <!-- Simbolo central: mano estilizada -->
+      <g fill="url(#g)" opacity=".9">
+        <ellipse cx="0" cy="10" rx="28" ry="34"/>
+        <!-- pulgar -->
+        <ellipse cx="-24" cy="-8" rx="8" ry="18" transform="rotate(-30 -24 -8)"/>
+        <!-- dedos -->
+        <rect x="-18" y="-45" width="10" height="35" rx="4"/>
+        <rect x="-4" y="-52" width="10" height="42" rx="4"/>
+        <rect x="10" y="-45" width="10" height="35" rx="4"/>
+      </g>
+      <g fill="none" stroke="#3a2612" stroke-width=".8" opacity=".8">
+        <ellipse cx="0" cy="10" rx="28" ry="34"/>
+      </g>
+
+      <!-- Ojo protector en el centro de la palma -->
+      <g transform="translate(0 10)">
+        <ellipse rx="14" ry="8" fill="#0a0503" stroke="url(#g)" stroke-width="1"/>
+        <circle r="4" fill="url(#g)"/>
+        <circle r="1.5" fill="#0a0503"/>
+      </g>
+
+      <!-- Detalles tallados alrededor -->
+      <g stroke="url(#g)" stroke-width=".5" fill="none" opacity=".7">
+        <path d="M-70,-90 Q-60,-70 -70,-50"/>
+        <path d="M70,-90 Q60,-70 70,-50"/>
+        <path d="M-80,60 Q-70,80 -60,90"/>
+        <path d="M80,60 Q70,80 60,90"/>
+        <circle cx="-70" cy="-70" r="2" fill="url(#g)" stroke="none"/>
+        <circle cx="70" cy="-70" r="2" fill="url(#g)" stroke="none"/>
+        <circle cx="-70" cy="80" r="2" fill="url(#g)" stroke="none"/>
+        <circle cx="70" cy="80" r="2" fill="url(#g)" stroke="none"/>
+      </g>
+
+      <!-- Rayos desde el centro -->
+      <g stroke="url(#g)" stroke-width=".4" opacity=".5">
+        <line x1="0" y1="-70" x2="0" y2="-100"/>
+        <line x1="0" y1="60" x2="0" y2="90"/>
+        <line x1="-40" y1="10" x2="-60" y2="10"/>
+        <line x1="40" y1="10" x2="60" y2="10"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Texto -->
+  <g text-anchor="middle" fill="#e8c874" font-family="Georgia,serif" opacity=".85">
+    <text x="800" y="810" font-size="16" letter-spacing="12">PAYÉ · MAMÓN</text>
+    <text x="800" y="832" font-size="10" letter-spacing="4" opacity=".7">✦ AMULETO GUARANÍ ✦</text>
+  </g>
+
+  <radialGradient id="v" cx="50%" cy="50%" r="80%"><stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".75"/></radialGradient>
+  <rect width="1600" height="900" fill="url(#v)"/>
+</svg>
