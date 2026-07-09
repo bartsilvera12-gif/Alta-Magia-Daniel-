@@ -619,7 +619,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           ? '<div style="position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;background:linear-gradient(transparent,rgba(6,4,3,.9));font-family:\'Cinzel\',serif;font-size:13px;letter-spacing:.5px;color:#f3d987;pointer-events:none;">' + t.caption + '</div>'
           : '';
         var media = t.mp4
-          ? '<video class="amd-trabajo-media" src="' + t.mp4 + '"' + (t.img ? ' poster="' + t.img + '"' : '') + ' autoplay muted loop playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;pointer-events:none;"></video>'
+          ? '<video class="amd-trabajo-media" src="' + t.mp4 + '"' + (t.img ? ' poster="' + t.img + '"' : '') + ' muted loop playsinline preload="none" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;pointer-events:none;"></video>'
           : (t.img
               ? '<img class="amd-trabajo-media" src="' + t.img + '" alt="' + (t.caption || 'Trabajo') + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;">'
               : '');
@@ -636,13 +636,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         '</div>' +
         '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1180px;margin:0 auto;">' + tiles + '</div>';
       pacto.parentNode.insertBefore(sec, pacto.nextSibling);
-      // Nudge autoplay (some browsers need muted set + an explicit play() call).
+      // Play each video ONLY while it's on screen (saves mobile data); pause the rest.
       try {
         var __vids = sec.querySelectorAll('video.amd-trabajo-media');
-        for (var __k = 0; __k < __vids.length; __k++) {
-          __vids[__k].muted = true;
-          var __pr = __vids[__k].play();
-          if (__pr && __pr.catch) __pr.catch(function(){});
+        var __playV = function(v){ v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function(){}); };
+        if ('IntersectionObserver' in window) {
+          var __io = new IntersectionObserver(function(entries){
+            entries.forEach(function(en){
+              if (en.isIntersecting) __playV(en.target);
+              else { try { en.target.pause(); } catch(e){} }
+            });
+          }, { threshold: 0.35 });
+          for (var __k = 0; __k < __vids.length; __k++) __io.observe(__vids[__k]);
+        } else {
+          for (var __j = 0; __j < __vids.length; __j++) __playV(__vids[__j]);
         }
       } catch (e) {}
     };
