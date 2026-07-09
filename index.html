@@ -1069,7 +1069,10 @@ document.addEventListener('DOMContentLoaded', async function() {
           if (card.style.display !== 'flex') { card.style.display = 'flex'; card.style.flexDirection = 'column'; }
           if (textBox.style.flex !== '1 1 auto') { textBox.style.flex = '1 1 auto'; textBox.style.display = 'flex'; textBox.style.flexDirection = 'column'; }
           var __w = textBox.querySelector('[data-amd-details-btn]');
-          if (__w && __w.style.marginTop !== 'auto') { __w.style.marginTop = 'auto'; __w.style.paddingTop = '14px'; }
+          if (__w && __w.style.getPropertyValue('margin-top') !== 'auto') {
+            __w.style.setProperty('margin-top', 'auto', 'important');
+            __w.style.paddingTop = '14px';
+          }
         }
         // Bind a capture-phase interceptor on the card ONCE. Capture runs before the
         // anchor's own navigation / any framework click handler, so we can reliably
