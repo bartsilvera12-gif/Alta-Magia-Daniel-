@@ -652,6 +652,19 @@ document.addEventListener('DOMContentLoaded', async function() {
           for (var __j = 0; __j < __vids.length; __j++) __playV(__vids[__j]);
         }
       } catch (e) {}
+      // Fallback: if a browser blocks muted autoplay, retry playing the on-screen
+      // videos on the first user interaction (bound once for the whole page).
+      if (!window.__amdTrabajosGesture) {
+        window.__amdTrabajosGesture = true;
+        var __retry = function(){
+          var vs = document.querySelectorAll('video.amd-trabajo-media');
+          for (var i = 0; i < vs.length; i++) {
+            var r = vs[i].getBoundingClientRect();
+            if (r.top < window.innerHeight && r.bottom > 0) { vs[i].muted = true; var p = vs[i].play(); if (p && p.catch) p.catch(function(){}); }
+          }
+        };
+        ['touchstart','click','scroll','keydown'].forEach(function(ev){ document.addEventListener(ev, __retry, { once: true, passive: true }); });
+      }
     };
     // Lightbox that plays a local mp4 with controls.
     var __amdOpenTrabajoVideo = function(mp4, caption){
