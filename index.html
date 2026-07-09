@@ -583,7 +583,24 @@ document.addEventListener('DOMContentLoaded', async function() {
       { mp4: '/trabajo-3.mp4', caption: 'Trabajo realizado' },
       { mp4: '/trabajo-4.mp4', caption: 'Trabajo realizado' }
     ];
+    var __amdTrabajosBound = false;
     var __amdInjectTrabajos = function() {
+      // Bind ONE delegated set of listeners on document (survives React re-renders and
+      // does not depend on the injected <section> keeping its own listeners).
+      if (!__amdTrabajosBound) {
+        __amdTrabajosBound = true;
+        document.addEventListener('click', function(e){
+          var tile = e.target.closest && e.target.closest('[data-amd-trabajo]');
+          if (!tile) return;
+          var item = __amdTrabajos[parseInt(tile.getAttribute('data-amd-trabajo'), 10)];
+          if (!item) return;
+          if (item.mp4) { __amdOpenTrabajoVideo(item.mp4, item.caption); return; }
+          if (item.video) { window.open(item.video, '_blank', 'noopener'); return; }
+          if (item.img) { __amdOpenTrabajoLightbox(item.img, item.caption); }
+        });
+        document.addEventListener('mouseover', function(e){ var t=e.target.closest&&e.target.closest('.amd-trabajo-tile'); if(t){ var m=t.querySelector('.amd-trabajo-media'); if(m) m.style.transform='scale(1.06)'; } });
+        document.addEventListener('mouseout', function(e){ var t=e.target.closest&&e.target.closest('.amd-trabajo-tile'); if(t){ var m=t.querySelector('.amd-trabajo-media'); if(m) m.style.transform='scale(1)'; } });
+      }
       if (document.getElementById('amd-trabajos-section')) return;
       var pacto = document.getElementById('amd-pacto-section');
       if (!pacto || !pacto.parentNode) return;
@@ -592,20 +609,23 @@ document.addEventListener('DOMContentLoaded', async function() {
       sec.setAttribute('style', 'position: relative; z-index: 2; padding: clamp(52px, 7vw, 96px) clamp(20px, 5vw, 64px); border-top: 1px solid rgba(212,175,55,.14);');
       var tiles = __amdTrabajos.map(function(t, i) {
         var isVid = !!(t.mp4 || t.video);
+        // Video tiles show a decorative poster + big ▶ (the mp4 is only downloaded when opened,
+        // so the page stays light). If a poster `img` is given, it's shown as the thumbnail.
         var play = isVid
           ? '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">' +
-              '<div style="width:56px;height:56px;border-radius:50%;background:rgba(6,4,3,.55);border:1.5px solid rgba(243,217,135,.85);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);">' +
-                '<svg viewBox="0 0 24 24" width="24" height="24" fill="#f3d987"><path d="M8 5v14l11-7z"/></svg>' +
+              '<div style="width:68px;height:68px;border-radius:50%;background:rgba(6,4,3,.5);border:2px solid rgba(243,217,135,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.55);">' +
+                '<svg viewBox="0 0 24 24" width="30" height="30" fill="#f3d987"><path d="M8 5v14l11-7z"/></svg>' +
               '</div>' +
             '</div>'
           : '';
         var cap = t.caption
           ? '<div style="position:absolute;left:0;right:0;bottom:0;padding:26px 14px 12px;background:linear-gradient(transparent,rgba(6,4,3,.9));font-family:\'Cinzel\',serif;font-size:13px;letter-spacing:.5px;color:#f3d987;pointer-events:none;">' + t.caption + '</div>'
           : '';
-        var media = t.mp4
-          ? '<video src="' + t.mp4 + '#t=0.5" preload="metadata" muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;pointer-events:none;"></video>'
-          : '<img src="' + t.img + '" alt="' + (t.caption || 'Trabajo') + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;">';
-        return '<div class="amd-trabajo-tile" data-amd-trabajo="' + i + '" style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:12px;border:1px solid rgba(212,175,55,.3);cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.45);background:#0a0503;">' +
+        var media = t.img
+          ? '<img class="amd-trabajo-media" src="' + t.img + '" alt="' + (t.caption || 'Trabajo') + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;">'
+          : '';
+        var bg = t.img ? '#0a0503' : 'radial-gradient(120% 120% at 50% 28%, #221607, #0a0604)';
+        return '<div class="amd-trabajo-tile" data-amd-trabajo="' + i + '" style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:12px;border:1px solid rgba(212,175,55,.3);cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.45);background:' + bg + ';">' +
             media + play + cap +
           '</div>';
       }).join('');
@@ -613,22 +633,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         '<div style="text-align:center;margin-bottom:36px;">' +
           '<div style="font-family:\'Cinzel\',serif;font-size:12px;letter-spacing:5px;color:#d4af37;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.55);">RESULTADOS REALES</div>' +
           '<h2 style="font-family:\'Cinzel\',serif;font-weight:800;font-size:clamp(30px,5vw,52px);line-height:1.05;margin:10px 0 8px;background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418);-webkit-background-clip:text;background-clip:text;color:transparent;">Nuestros Trabajos</h2>' +
-          '<p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(16px,2.2vw,20px);color:#d8cdb4;max-width:600px;margin:0 auto;">Mirá videos y resultados de trabajos realizados.</p>' +
+          '<p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(16px,2.2vw,20px);color:#d8cdb4;max-width:600px;margin:0 auto;">Tocá para ver los videos de trabajos realizados.</p>' +
         '</div>' +
         '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1180px;margin:0 auto;">' + tiles + '</div>';
       pacto.parentNode.insertBefore(sec, pacto.nextSibling);
-      // hover zoom
-      sec.addEventListener('mouseover', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img,video'); if(im) im.style.transform='scale(1.06)'; } });
-      sec.addEventListener('mouseout', function(e){ var t=e.target.closest('.amd-trabajo-tile'); if(t){ var im=t.querySelector('img,video'); if(im) im.style.transform='scale(1)'; } });
-      // click: play the video (mp4 in a lightbox, or external URL in a new tab) or open the photo
-      sec.addEventListener('click', function(e){
-        var tile = e.target.closest('[data-amd-trabajo]'); if(!tile) return;
-        var item = __amdTrabajos[parseInt(tile.getAttribute('data-amd-trabajo'),10)];
-        if(!item) return;
-        if(item.mp4){ __amdOpenTrabajoVideo(item.mp4, item.caption); return; }
-        if(item.video){ window.open(item.video, '_blank', 'noopener'); return; }
-        __amdOpenTrabajoLightbox(item.img, item.caption);
-      });
     };
     // Lightbox that plays a local mp4 with controls.
     var __amdOpenTrabajoVideo = function(mp4, caption){
