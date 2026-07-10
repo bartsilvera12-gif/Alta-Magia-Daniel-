@@ -666,6 +666,44 @@ document.addEventListener('DOMContentLoaded', async function() {
         ['touchstart','click','scroll','keydown'].forEach(function(ev){ document.addEventListener(ev, __retry, { once: true, passive: true }); });
       }
     };
+    // Homepage CATÁLOGO preview: a few featured products + a "Ver catálogo" button → /catalogo.
+    var __amdCatalogPreview = [
+      { name: 'Perfume Pombagira', price: 'Gs. 120.000', img: '/perfume-pombagira.jpg?v=20260709' },
+      { name: 'San La Muerte Roja', price: 'Gs. 130.000', img: '/figura-san-la-muerte-roja.jpg?v=20260709' },
+      { name: 'Baphomet', price: 'Gs. 180.000', img: '/figura-baphomet.jpg?v=20260709' },
+      { name: 'Mammón · Diablo del Dinero', price: 'Gs. 60.000', img: '/amuleto-mammon.jpg?v=20260709' },
+      { name: 'Vaso Calavera · Crystal Head', price: 'Gs. 55.000', img: '/vaso-calavera.jpg?v=20260710' }
+    ];
+    var __amdInjectCatalogPreview = function() {
+      if (document.getElementById('amd-catalogo-section')) return;
+      var anchor = document.getElementById('amd-trabajos-section') || document.getElementById('amd-pacto-section');
+      if (!anchor || !anchor.parentNode) return;
+      var sec = document.createElement('section');
+      sec.id = 'amd-catalogo-section';
+      sec.setAttribute('style', 'position: relative; z-index: 2; padding: clamp(52px, 7vw, 96px) clamp(20px, 5vw, 64px); border-top: 1px solid rgba(212,175,55,.14);');
+      var cards = __amdCatalogPreview.map(function(p) {
+        return '<a href="/catalogo" style="text-decoration:none; display:flex; flex-direction:column; overflow:hidden; border-radius:14px; border:1px solid rgba(212,175,55,.3); background:#0d0a07; box-shadow:0 14px 36px rgba(0,0,0,.5);">' +
+            '<div style="aspect-ratio:1/1; overflow:hidden; background:#0a0503;">' +
+              '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">' +
+            '</div>' +
+            '<div style="padding:14px 14px 16px; text-align:center;">' +
+              '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:14px; letter-spacing:.3px; color:#f3d987; line-height:1.25; min-height:36px;">' + p.name + '</div>' +
+              '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:16px; color:#e8c874; margin-top:8px;">' + p.price + '</div>' +
+            '</div>' +
+          '</a>';
+      }).join('');
+      sec.innerHTML =
+        '<div style="text-align:center;margin-bottom:36px;">' +
+          '<div style="font-family:\'Cinzel\',serif;font-size:12px;letter-spacing:5px;color:#d4af37;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.55);">NUESTRA TIENDA</div>' +
+          '<h2 style="font-family:\'Cinzel\',serif;font-weight:800;font-size:clamp(30px,5vw,52px);line-height:1.05;margin:10px 0 8px;background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418);-webkit-background-clip:text;background-clip:text;color:transparent;">Catálogo</h2>' +
+          '<p style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:clamp(16px,2.2vw,20px);color:#d8cdb4;max-width:600px;margin:0 auto;">Perfumes, figuras, amuletos y más. Elegí tus favoritos y hacé tu pedido.</p>' +
+        '</div>' +
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;max-width:1180px;margin:0 auto;">' + cards + '</div>' +
+        '<div style="text-align:center;margin-top:44px;">' +
+          '<a href="/catalogo" style="display:inline-flex;align-items:center;gap:10px;font-family:\'Cinzel\',serif;font-weight:600;font-size:15px;letter-spacing:2px;color:#0d0a06;background:linear-gradient(135deg,#fbf0c4,#e6c56e,#b98d22);padding:16px 46px;border-radius:999px;box-shadow:0 14px 40px rgba(212,175,55,.34);text-decoration:none;">VER CATÁLOGO →</a>' +
+        '</div>';
+      anchor.parentNode.insertBefore(sec, anchor.nextSibling);
+    };
     // Lightbox that plays a local mp4 with controls.
     var __amdOpenTrabajoVideo = function(mp4, caption){
       var ov = document.getElementById('amd-trabajo-videobox');
@@ -1286,7 +1324,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     };
     var __amdRun = function() {
-      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectTrabajos(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
+      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectTrabajos(); __amdInjectCatalogPreview(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
       __amdServicesPreview();
       __amdRemoveKickerDashes('TAROT Y TRABAJOS ESPIRITUALES');
       __amdRemoveKickerDashes('LES OFRECE');
