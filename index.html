@@ -631,21 +631,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         '</div>' +
         '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1180px;margin:0 auto;">' + tiles + '</div>';
       pacto.parentNode.insertBefore(sec, pacto.nextSibling);
-      // Play each video ONLY while it's on screen (saves mobile data); pause the rest.
+      // Autoplay every video and keep them looping non-stop (no pausing off-screen).
       try {
         var __vids = sec.querySelectorAll('video.amd-trabajo-media');
-        var __playV = function(v){ v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function(){}); };
-        if ('IntersectionObserver' in window) {
-          var __io = new IntersectionObserver(function(entries){
-            entries.forEach(function(en){
-              if (en.isIntersecting) __playV(en.target);
-              else { try { en.target.pause(); } catch(e){} }
-            });
-          }, { threshold: 0.35 });
-          for (var __k = 0; __k < __vids.length; __k++) __io.observe(__vids[__k]);
-        } else {
-          for (var __j = 0; __j < __vids.length; __j++) __playV(__vids[__j]);
-        }
+        for (var __k = 0; __k < __vids.length; __k++) { __vids[__k].muted = true; var __pr = __vids[__k].play(); if (__pr && __pr.catch) __pr.catch(function(){}); }
       } catch (e) {}
       // Fallback: if a browser blocks muted autoplay, retry playing the on-screen
       // videos on the first user interaction (bound once for the whole page).
@@ -653,12 +642,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         window.__amdTrabajosGesture = true;
         var __retry = function(){
           var vs = document.querySelectorAll('video.amd-trabajo-media');
-          for (var i = 0; i < vs.length; i++) {
-            var r = vs[i].getBoundingClientRect();
-            if (r.top < window.innerHeight && r.bottom > 0) { vs[i].muted = true; var p = vs[i].play(); if (p && p.catch) p.catch(function(){}); }
-          }
+          for (var i = 0; i < vs.length; i++) { vs[i].muted = true; var p = vs[i].play(); if (p && p.catch) p.catch(function(){}); }
         };
         ['touchstart','click','scroll','keydown'].forEach(function(ev){ document.addEventListener(ev, __retry, { once: true, passive: true }); });
+      }
+    };
+    // Keep the "Nuestros Trabajos" videos playing non-stop: restart any that got paused.
+    var __amdKeepTrabajosPlaying = function() {
+      var vids = document.querySelectorAll('video.amd-trabajo-media');
+      for (var i = 0; i < vids.length; i++) {
+        var v = vids[i];
+        if (v.paused || v.ended) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function(){}); }
       }
     };
     // Homepage CATÁLOGO preview: a few featured products + a "Ver catálogo" button → /catalogo.
@@ -1339,7 +1333,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     };
     var __amdRun = function() {
-      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectCatalogPreview(); __amdInjectTrabajos(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
+      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectCatalogPreview(); __amdInjectTrabajos(); __amdKeepTrabajosPlaying(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
       __amdServicesPreview();
       __amdRemoveKickerDashes('TAROT Y TRABAJOS ESPIRITUALES');
       __amdRemoveKickerDashes('LES OFRECE');
