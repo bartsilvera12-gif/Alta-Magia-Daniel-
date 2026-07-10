@@ -2,7 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Bundled Page</title>
+  <title>Alta Magia Daniel</title>
+  <link rel="icon" type="image/png" href="/favicon-md.png?v=20260710">
+  <link rel="apple-touch-icon" href="/favicon-md.png?v=20260710">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #060403; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -967,6 +969,26 @@ document.addEventListener('DOMContentLoaded', async function() {
         img.setAttribute('src', 'card-maestro-sobre.jpg?v=20260709c');
       }
     };
+    // Set the browser-tab favicon (MD crest) + a proper page title (survives re-renders).
+    var __amdSetFavicon = function() {
+      if (!document.title || document.title === 'Bundled Page') document.title = 'Alta Magia Daniel';
+      var href = '/favicon-md.png?v=20260710';
+      var head = document.head || document.documentElement;
+      var link = document.querySelector('link[rel="icon"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', 'icon');
+        link.setAttribute('type', 'image/png');
+        head.appendChild(link);
+      }
+      if (link.getAttribute('href') !== href) link.setAttribute('href', href);
+      if (!document.querySelector('link[rel="apple-touch-icon"]')) {
+        var at = document.createElement('link');
+        at.setAttribute('rel', 'apple-touch-icon');
+        at.setAttribute('href', href);
+        head.appendChild(at);
+      }
+    };
     // Hide the "CONSULTAR →" label at the bottom of every service card
     // (the modal's own "CONSULTAR" WhatsApp button is an <a> with no arrow, so it stays).
     var __amdHideConsultarLabels = function() {
@@ -1329,6 +1351,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdFixHeaderLogo();
       __amdHideMaestroCursive();
       __amdOverrideSobreImg();
+      __amdSetFavicon();
       __amdInjectNeuraCredit();
       __amdRemovePrivacyLink();
       __amdFixContactCta();
