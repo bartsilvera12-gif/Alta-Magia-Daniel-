@@ -601,7 +601,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.addEventListener('mouseout', function(e){ var t=e.target.closest&&e.target.closest('.amd-trabajo-tile'); if(t){ var m=t.querySelector('.amd-trabajo-media'); if(m) m.style.transform='scale(1)'; } });
       }
       if (document.getElementById('amd-trabajos-section')) return;
-      var pacto = document.getElementById('amd-pacto-section');
+      // Anchor below the catalog preview if it exists, otherwise below the Pacto section.
+      var pacto = document.getElementById('amd-catalogo-section') || document.getElementById('amd-pacto-section');
       if (!pacto || !pacto.parentNode) return;
       var sec = document.createElement('section');
       sec.id = 'amd-trabajos-section';
@@ -676,7 +677,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     ];
     var __amdInjectCatalogPreview = function() {
       if (document.getElementById('amd-catalogo-section')) return;
-      var anchor = document.getElementById('amd-trabajos-section') || document.getElementById('amd-pacto-section');
+      var anchor = document.getElementById('amd-pacto-section');
       if (!anchor || !anchor.parentNode) return;
       var sec = document.createElement('section');
       sec.id = 'amd-catalogo-section';
@@ -1324,7 +1325,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     };
     var __amdRun = function() {
-      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectTrabajos(); __amdInjectCatalogPreview(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
+      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectCatalogPreview(); __amdInjectTrabajos(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
       __amdServicesPreview();
       __amdRemoveKickerDashes('TAROT Y TRABAJOS ESPIRITUALES');
       __amdRemoveKickerDashes('LES OFRECE');
