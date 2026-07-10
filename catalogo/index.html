@@ -213,7 +213,6 @@
     </div>
     <div class="ditems" id="ditems"></div>
     <div class="dfoot">
-      <div class="dtotal"><span class="tl">TOTAL</span><span class="tv" id="cartTotal">Gs. 0</span></div>
       <button class="checkout" id="checkoutBtn">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path fill="#0d3b1e" d="M16.02 5.33c-5.9 0-10.68 4.78-10.68 10.68 0 1.88.49 3.71 1.42 5.32L5.33 26.67l5.5-1.44a10.65 10.65 0 0 0 5.19 1.32c5.9 0 10.68-4.78 10.68-10.68S21.92 5.33 16.02 5.33Zm6.24 15.28c-.26.73-1.52 1.4-2.11 1.49-.54.08-1.22.12-1.96-.12-.45-.14-1.03-.33-1.77-.65-3.11-1.34-5.14-4.47-5.29-4.68-.15-.2-1.26-1.67-1.26-3.19s.8-2.27 1.09-2.58c.29-.31.62-.39.82-.39.21 0 .41 0 .59.01.19.01.44-.07.69.53.26.61.88 2.13.96 2.28.08.15.13.33.03.53-.1.2-.16.32-.31.5-.15.17-.32.39-.46.52-.15.15-.31.31-.13.61.18.31.79 1.31 1.7 2.12 1.17 1.04 2.16 1.37 2.47 1.52.31.15.49.13.67-.08.18-.2.77-.9.98-1.21.2-.31.41-.26.69-.15.29.11 1.81.86 2.12 1.01.31.16.51.23.59.36.08.14.08.79-.18 1.52Z"/></svg>
         FINALIZAR PEDIDO
@@ -292,7 +291,6 @@
           '<div class="body">' +
             '<h3>' + esc(p.name) + '</h3>' +
             (p.desc ? '<div class="pdesc">' + esc(p.desc) + '</div>' : '<div class="pdesc"></div>') +
-            '<div class="price">' + priceLabel(p.price) + '</div>' +
             '<button class="add-btn" data-add="' + esc(p.id) + '">' +
               '<svg viewBox="0 0 24 24" fill="none" stroke="#0d0a06" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>' +
               'Agregar al carrito' +
@@ -320,7 +318,6 @@
             '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '">' +
             '<div class="di-info">' +
               '<div class="di-name">' + esc(p.name) + '</div>' +
-              '<div class="di-price">' + (p.price>0?fmt(p.price):'A consultar') + '</div>' +
               '<div class="qty">' +
                 '<button data-dec="' + esc(id) + '">−</button>' +
                 '<span>' + cart[id] + '</span>' +
@@ -331,7 +328,6 @@
           '</div>';
         }).join('');
       }
-      document.getElementById('cartTotal').textContent = fmt(cartTotal());
       updateCartBadge();
     }
     function addToCart(id){ cart[id] = (cart[id]||0) + 1; save('amd_cart', cart); renderCart(); toast('Agregado al carrito'); }
@@ -355,14 +351,13 @@
     function checkout(){
       var ids = Object.keys(cart);
       if (!ids.length){ toast('Tu carrito está vacío'); return; }
-      var lines = ['Hola! Quiero hacer un pedido del catálogo:', ''];
+      var lines = ['Hola! Me interesan estos productos del catálogo:', ''];
       ids.forEach(function(id){
         var p = byId(id); if (!p) return;
-        var sub = p.price>0 ? ' — ' + fmt(p.price*cart[id]) : ' — a consultar';
-        lines.push('• ' + cart[id] + 'x ' + p.name + sub);
+        lines.push('• ' + cart[id] + 'x ' + p.name);
       });
       lines.push('');
-      lines.push('TOTAL: ' + fmt(cartTotal()));
+      lines.push('¿Me pasás precio y disponibilidad?');
       window.open(WA + '?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
     }
 
