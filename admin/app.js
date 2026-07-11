@@ -359,7 +359,7 @@ async function formView(entity, id, preloaded) {
     fh += `<div class="field"><label for="fld_${f.name}">${esc(f.label)}${f.required?' *':''}</label>`;
     if (f.type === 'textarea') fh += `<textarea id="fld_${f.name}" ${f.readOnly?'readonly':''} rows="4">${esc(val)}</textarea>`;
     else if (f.type === 'bool') fh += `<label class="switch"><input type="checkbox" id="fld_${f.name}" ${val?'checked':''}> <span>${val?'Sí':'No'}</span></label>`;
-    else if (f.type === 'number') fh += `<input id="fld_${f.name}" type="number" step="any" value="${val==null?'':esc(val)}">`;
+    else if (f.type === 'number') fh += `<input id="fld_${f.name}" type="number" step="any" min="${f.min!=null?f.min:0}" value="${val==null?'':esc(val)}">`;
     else if (f.type === 'select') fh += `<select id="fld_${f.name}">${f.options.map(o=>`<option value="${o}" ${val===o?'selected':''}>${o}</option>`).join('')}</select>`;
     else if (f.type === 'fk') fh += `<select id="fld_${f.name}"><option value="">— sin categoría —</option>${(await refOptions(f.ref)).map(o=>`<option value="${o.id}" ${val===o.id?'selected':''}>${esc(o.name)}</option>`).join('')}</select>`;
     else if (f.type === 'image') fh += `<div class="img-field"><div class="img-prev" id="prev_${f.name}">${val?`<img src="${esc(val)}" alt="">`:'<span>sin imagen</span>'}</div>
@@ -426,6 +426,12 @@ async function formView(entity, id, preloaded) {
       else if (f.type === 'fk') v = el.value || null;
       else v = el.value === '' ? null : el.value;
       if (f.name === 'sort_order' && v == null) v = 0;   // NOT NULL column
+      // number validation: no NaN, no negatives (DB constraints require >= 0)
+      if (f.type === 'number' && v != null) {
+        if (Number.isNaN(v)) { toast('Valor numérico inválido en: ' + f.label, 'err'); return; }
+        const min = f.min != null ? f.min : 0;
+        if (v < min) { toast(f.label + ' no puede ser menor que ' + min + '.', 'err'); return; }
+      }
       payload[f.name] = v;
     }
     // required check
@@ -439,7 +445,14 @@ async function formView(entity, id, preloaded) {
       toast(isEdit ? 'Guardado' : 'Creado');
       location.hash = backHash;
     } catch (err) {
-      const m = /duplicate key|unique/i.test(err.message||'') ? 'Ya existe un registro con ese slug.' : (err.message || 'Error al guardar');
+      const raw = err.message || '';
+      let m = raw || 'Error al guardar';
+      if (/duplicate key|unique/i.test(raw)) m = 'Ya existe un registro con ese slug.';
+      else if (/price_check/i.test(raw)) m = 'El precio no puede ser negativo.';
+      else if (/promotional_price_check/i.test(raw)) m = 'El precio promocional no puede ser negativo.';
+      else if (/stock_check/i.test(raw)) m = 'El stock no puede ser negativo.';
+      else if (/sort_order_check/i.test(raw)) m = 'El orden no puede ser negativo.';
+      else if (/check constraint/i.test(raw)) m = 'Un valor no cumple las reglas del formulario. Revisá los campos numéricos.';
       toast(m, 'err');
     }
   });
