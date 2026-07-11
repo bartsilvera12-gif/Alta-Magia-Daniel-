@@ -109,11 +109,6 @@
       document.getElementById('togglePw').textContent = isPw ? 'OCULTAR' : 'VER';
     });
 
-    if (!cfg.url || !cfg.anonKey) {
-      show('info', 'El panel todavía no está conectado a Supabase. Completá /admin/config.js con la URL y la anon key.');
-      btn.disabled = true;
-    }
-
     const supabase = (cfg.url && cfg.anonKey)
       ? createClient(cfg.url, cfg.anonKey, {
           auth: { persistSession: true, autoRefreshToken: true, storageKey: 'amd-admin-auth' },
