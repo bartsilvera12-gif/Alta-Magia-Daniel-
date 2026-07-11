@@ -318,13 +318,18 @@ async function listView(entity) {
         const { error } = await supabase.from(entity.table).delete().eq('id', id);
         if (error) throw error; rows = rows.filter(r => r.id !== id); render(rows); toast('Eliminado');
       } else if (t.dataset.move) {
-        const idx = rows.findIndex(r => r.id === id); const j = t.dataset.move==='up'?idx-1:idx+1;
-        if (j < 0 || j >= rows.length) return;
-        const a = rows[idx], b = rows[j];
-        await update(entity.table, a.id, { sort_order: b.sort_order });
-        await update(entity.table, b.id, { sort_order: a.sort_order });
-        const tmp = a.sort_order; a.sort_order = b.sort_order; b.sort_order = tmp;
-        rows.sort((x,y)=>x.sort_order-y.sort_order); render(rows); toast('Orden actualizado');
+        const idx = rows.findIndex(r => r.id === id);
+        const j = t.dataset.move === 'up' ? idx - 1 : idx + 1;
+        if (idx < 0 || j < 0 || j >= rows.length) return;
+        // mover la fila en el arreglo y renumerar sort_order secuencialmente.
+        // Robusto ante valores repetidos o todos en 0 (el intercambio simple fallaba ahí).
+        const moved = rows.splice(idx, 1)[0];
+        rows.splice(j, 0, moved);
+        const changed = [];
+        rows.forEach((r, k) => { const so = k + 1; if (r.sort_order !== so) { r.sort_order = so; changed.push(r); } });
+        render(rows); // feedback visual inmediato
+        await Promise.all(changed.map(r => update(entity.table, r.id, { sort_order: r.sort_order })));
+        toast('Orden actualizado');
       }
     } catch (err) { toast(err.message || 'Error', 'err'); }
   });
