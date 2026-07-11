@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel · Alta Magia Daniel</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon-md.png?v=20260710">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root { --gold:#d4af37; --gold-soft:#e8c874; --gold-bright:#f3d987; --text:#cbbfa4; --muted:#8f8570; --line:rgba(212,175,55,.22); }
+    body { min-height:100vh; color:var(--text); font-family:'Cormorant Garamond',Georgia,serif;
+      background:radial-gradient(120% 90% at 50% 0%, #140c05 0%, #0b0603 55%, #000 100%) fixed, #060403; }
+    /* gate */
+    #gate { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#060403; z-index:50;
+      font-family:'Cinzel',serif; letter-spacing:2px; color:var(--gold-soft); font-size:13px; }
+    .spin { display:inline-block; width:16px; height:16px; border:2px solid rgba(212,175,55,.3);
+      border-top-color:var(--gold); border-radius:50%; animation:spin .7s linear infinite; margin-right:10px; vertical-align:-3px; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .spin { animation:none; } }
+    /* shell */
+    #app { display:none; min-height:100vh; grid-template-columns:250px 1fr; }
+    aside { border-right:1px solid var(--line); background:rgba(6,4,3,.6); padding:22px 16px; }
+    .brand { display:flex; align-items:center; gap:11px; margin-bottom:26px; }
+    .brand img { width:42px; height:42px; border-radius:50%; object-fit:cover; border:1.5px solid rgba(212,175,55,.6); background:#000; }
+    .brand b { font-family:'Cinzel',serif; font-weight:700; font-size:14px; letter-spacing:2px; color:var(--gold-bright); }
+    .brand span { display:block; font-size:10px; letter-spacing:2px; color:var(--muted); }
+    nav a { display:flex; align-items:center; justify-content:space-between; padding:11px 13px; border-radius:9px; margin-bottom:3px;
+      font-family:'Cinzel',serif; font-size:12.5px; letter-spacing:1px; color:var(--text); text-decoration:none; }
+    nav a[aria-current="page"] { background:linear-gradient(135deg,rgba(212,175,55,.22),rgba(212,175,55,.05)); color:var(--gold-bright); }
+    nav a[data-soon] { color:var(--muted); cursor:default; }
+    nav a[data-soon] em { font-style:normal; font-family:'Cormorant Garamond',serif; font-size:11px; color:rgba(143,133,112,.8); }
+    header { display:flex; align-items:center; justify-content:space-between; padding:18px 28px; border-bottom:1px solid var(--line); }
+    header .who { font-size:15px; }
+    header .who b { color:var(--gold-bright); font-family:'Cinzel',serif; font-size:13px; letter-spacing:1px; }
+    .role { font-family:'Cinzel',serif; font-size:10px; letter-spacing:1.5px; color:#0d0a06; background:linear-gradient(135deg,#fbf0c4,#e6c56e,#b98d22);
+      padding:3px 10px; border-radius:999px; margin-left:8px; }
+    .logout { cursor:pointer; font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; color:var(--gold-soft);
+      background:transparent; border:1px solid var(--line); padding:9px 16px; border-radius:999px; }
+    .logout:hover { border-color:rgba(212,175,55,.6); }
+    main { padding:34px 28px; }
+    h1 { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(26px,4vw,40px);
+      background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .lead { font-style:italic; color:var(--muted); margin:6px 0 26px; font-size:17px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; max-width:900px; }
+    .stat { border:1px solid var(--line); border-radius:14px; padding:18px 20px; background:rgba(13,10,7,.55); }
+    .stat .n { font-family:'Cinzel',serif; font-weight:800; font-size:30px; color:var(--gold-bright); }
+    .stat .l { font-size:14px; color:var(--muted); letter-spacing:.5px; margin-top:2px; }
+    .note { margin-top:26px; max-width:760px; border:1px solid var(--line); border-radius:14px; padding:18px 20px; background:rgba(212,175,55,.06); font-size:16px; line-height:1.6; }
+    .note b { color:var(--gold-bright); }
+    .actions { margin-top:22px; display:flex; flex-wrap:wrap; gap:12px; }
+    .actions a { font-family:'Cinzel',serif; font-size:12px; letter-spacing:1.5px; color:var(--gold-soft);
+      border:1px solid var(--line); padding:11px 18px; border-radius:999px; text-decoration:none; }
+    .actions a:hover { border-color:rgba(212,175,55,.6); }
+    @media (max-width:820px){ #app{ grid-template-columns:1fr; } aside{ border-right:none; border-bottom:1px solid var(--line); } }
+  </style>
+</head>
+<body>
+  <div id="gate"><span class="spin"></span> Verificando acceso…</div>
+
+  <div id="app">
+    <aside>
+      <div class="brand">
+        <img src="/favicon-md.png?v=20260710" alt="">
+        <span><b>ALTA MAGIA</b><span>PANEL ADMIN</span></span>
+      </div>
+      <nav>
+        <a href="/admin" aria-current="page">Dashboard</a>
+        <a data-soon>Portada <em>pronto</em></a>
+        <a data-soon>Sobre mí <em>pronto</em></a>
+        <a data-soon>Servicios <em>pronto</em></a>
+        <a data-soon>Tarot <em>pronto</em></a>
+        <a data-soon>Catálogo <em>pronto</em></a>
+        <a data-soon>Trabajos <em>pronto</em></a>
+        <a data-soon>Testimonios <em>pronto</em></a>
+        <a data-soon>Redes sociales <em>pronto</em></a>
+        <a data-soon>Configuración <em>pronto</em></a>
+        <a data-soon>Mensajes <em>pronto</em></a>
+        <a id="adminsLink" data-soon style="display:none">Administradores <em>pronto</em></a>
+      </nav>
+    </aside>
+
+    <div>
+      <header>
+        <div class="who">Hola, <b id="adminName">—</b><span class="role" id="adminRole">—</span></div>
+        <button class="logout" id="logoutBtn">Cerrar sesión</button>
+      </header>
+      <main>
+        <h1>Panel de control</h1>
+        <p class="lead">Bienvenido al panel de Alta Magia Daniel.</p>
+
+        <div class="grid" id="stats">
+          <div class="stat"><div class="n" id="stServices">–</div><div class="l">Servicios activos</div></div>
+          <div class="stat"><div class="n" id="stProducts">–</div><div class="l">Productos activos</div></div>
+          <div class="stat"><div class="n" id="stWorks">–</div><div class="l">Trabajos</div></div>
+          <div class="stat"><div class="n" id="stMessages">–</div><div class="l">Mensajes nuevos</div></div>
+        </div>
+
+        <div class="note">
+          <b>Base de datos lista.</b> El schema <code>altamagiadaniel</code> y el contenido actual ya están cargados.
+          Los módulos de edición (Portada, Servicios, Catálogo, Trabajos…) se activan en la próxima entrega.
+        </div>
+
+        <div class="actions">
+          <a href="/" target="_blank" rel="noopener">Ver sitio público ↗</a>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/admin/config.js"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const cfg = window.AMD_SUPABASE || {};
+    const gate = document.getElementById('gate');
+    const app = document.getElementById('app');
+
+    function toLogin() { location.replace('/admin/login'); }
+
+    if (!cfg.url || !cfg.anonKey) {
+      gate.innerHTML = 'Panel no configurado — completá /admin/config.js';
+      throw new Error('missing supabase config');
+    }
+
+    const supabase = createClient(cfg.url, cfg.anonKey, {
+      auth: { persistSession: true, autoRefreshToken: true, storageKey: 'amd-admin-auth' },
+      db: { schema: cfg.schema || 'altamagiadaniel' }
+    });
+
+    (async () => {
+      const { data: sess } = await supabase.auth.getSession();
+      if (!sess || !sess.session) return toLogin();
+
+      const uid = sess.session.user.id;
+      const { data: profile, error } = await supabase
+        .from('admin_profiles').select('id, full_name, role, is_active')
+        .eq('user_id', uid).maybeSingle();
+
+      if (error || !profile || !profile.is_active) { await supabase.auth.signOut(); return toLogin(); }
+
+      // Render shell
+      document.getElementById('adminName').textContent = profile.full_name || sess.session.user.email;
+      document.getElementById('adminRole').textContent = profile.role;
+      if (profile.role === 'super_admin') document.getElementById('adminsLink').style.display = '';
+      gate.style.display = 'none';
+      app.style.display = 'grid';
+
+      // Stats (best-effort; head counts)
+      const count = async (table, filter) => {
+        let q = supabase.from(table).select('*', { count: 'exact', head: true });
+        if (filter) q = filter(q);
+        const { count: c } = await q;
+        return c ?? 0;
+      };
+      try {
+        document.getElementById('stServices').textContent = await count('services', q => q.eq('is_active', true));
+        document.getElementById('stProducts').textContent = await count('products', q => q.eq('is_active', true));
+        document.getElementById('stWorks').textContent    = await count('works', q => q.eq('is_active', true));
+        document.getElementById('stMessages').textContent = await count('contact_messages', q => q.eq('status', 'new'));
+      } catch (_) { /* leave dashes */ }
+    })();
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      toLogin();
+    });
+  </script>
+</body>
+</html>
