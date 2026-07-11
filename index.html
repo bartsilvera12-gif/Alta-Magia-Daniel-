@@ -1351,7 +1351,35 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdAddServiceDetails();
       __amdHideConsultarLabels();
     };
+    // ---- Live content from Supabase (public read; falls back to bundled data on error) ----
+    var __AMD_URL = 'https://api.neura.com.py';
+    var __AMD_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzc0MTAxNDYxLCJleHAiOjE5MzE3ODE0NjF9.7_wAph8IolPMXtgfpezSwS5XR62IdD__qhqCywLDp3Q';
+    function __amdRest(p){ return fetch(__AMD_URL + '/rest/v1/' + p, { headers: { apikey: __AMD_ANON, Authorization: 'Bearer ' + __AMD_ANON, 'Accept-Profile': 'altamagiadaniel' } }).then(function(r){ return r.ok ? r.json() : []; }); }
+    var __amdSupaLoaded = false;
+    function __amdLoadFromSupabase(){
+      if (__amdSupaLoaded) return; __amdSupaLoaded = true;
+      Promise.all([
+        __amdRest('works?select=title,media_url,thumbnail_url&is_active=eq.true&order=sort_order.asc'),
+        __amdRest('products?select=name,cover_image_url,is_featured&is_active=eq.true&order=sort_order.asc')
+      ]).then(function(res){
+        try {
+          var works = res[0] || [], prods = res[1] || [];
+          if (works.length) {
+            __amdTrabajos = works.map(function(w){ return { mp4: w.media_url, img: w.thumbnail_url, caption: (w.title || 'Trabajo realizado') }; });
+            var ts = document.getElementById('amd-trabajos-section'); if (ts) ts.remove();
+          }
+          if (prods.length) {
+            var feat = prods.filter(function(p){ return p.is_featured; });
+            if (feat.length < 4) feat = prods;
+            __amdCatalogPreview = feat.slice(0, 8).map(function(p){ return { name: p.name, price: '', img: p.cover_image_url }; });
+            var cs = document.getElementById('amd-catalogo-section'); if (cs) cs.remove();
+          }
+          __amdRun();
+        } catch (e) {}
+      }).catch(function(){});
+    }
     __amdRun();
+    __amdLoadFromSupabase();
     // Observe DOM changes (React re-renders) and re-apply — debounced so a burst of
     // mutations coalesces into a single pass instead of running __amdRun dozens of times.
     try {
