@@ -217,6 +217,7 @@ async function dashboard() {
   view.innerHTML = crumb('Dashboard') + `<h1>Panel de control</h1><p class="lead">Bienvenido, ${esc(ME.full_name||'')}.</p>
     <div class="stats" id="stats"></div>
     <div class="qa"><a class="chip" href="#/products/new">+ Producto</a><a class="chip" href="#/services/new">+ Servicio</a>
+      <a class="chip" href="#/product_categories/new">+ Categoría</a>
       <a class="chip" href="#/works/new">+ Trabajo</a><a class="chip" href="#/hero">Editar portada</a>
       <a class="chip" href="/" target="_blank" rel="noopener">Ver sitio ↗</a></div>`;
   const count = async (t, f) => { let q = supabase.from(t).select('*',{count:'exact',head:true}); if (f) q = f(q); const { count:c } = await q; return c ?? 0; };
