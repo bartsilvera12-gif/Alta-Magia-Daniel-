@@ -267,15 +267,15 @@ async function listView(entity) {
     let h = `<table class="tbl"><thead><tr>${entity.img?'<th></th>':''}${cols.map(c=>`<th>${esc(c[1])}</th>`).join('')}<th class="ta-r">Acciones</th></tr></thead><tbody>`;
     list.forEach((r, i) => {
       h += `<tr>`;
-      if (entity.img) h += `<td>${r[entity.img]?`<img class="thumb" src="${esc(r[entity.img])}" alt="">`:'<span class="thumb ph"></span>'}</td>`;
+      if (entity.img) h += `<td class="imgcell">${r[entity.img]?`<img class="thumb" src="${esc(r[entity.img])}" alt="">`:'<span class="thumb ph"></span>'}</td>`;
       cols.forEach(c => {
         let v = r[c[0]];
         if (c[0] === 'category_id') v = fkMap[v] || '—';
         else if (typeof v === 'boolean') v = v ? '✓' : '—';
         else if (c[0] === 'created_at' && v) v = new Date(v).toLocaleDateString('es-PY');
-        h += `<td>${esc(v==null?'—':v)}</td>`;
+        h += `<td data-label="${esc(c[1])}">${esc(v==null?'—':v)}</td>`;
       });
-      h += `<td class="ta-r acts">`;
+      h += `<td class="ta-r acts" data-label="">`;
       if (canSort) h += `<button title="Subir" data-move="up" data-id="${r.id}" ${i===0?'disabled':''}>▲</button>
         <button title="Bajar" data-move="down" data-id="${r.id}" ${i===list.length-1?'disabled':''}>▼</button>`;
       if (featField) h += `<button title="Destacar" class="${r.is_featured?'on':''}" data-feat="${r.id}">★</button>`;
