@@ -85,6 +85,11 @@
     .mini { font-family:'Cinzel',serif; font-size:10px; letter-spacing:1px; color:var(--gold-soft); border:1px solid var(--line); padding:6px 11px; border-radius:7px; text-decoration:none; cursor:pointer; background:transparent; }
     .mini:hover { border-color:rgba(212,175,55,.6); }
     .mini.del { color:#ff9a9a; }
+    .acts .ico { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; margin-left:5px;
+      border:1px solid var(--line); border-radius:7px; color:var(--gold-soft); background:transparent; cursor:pointer; text-decoration:none; }
+    .acts .ico:hover { border-color:rgba(212,175,55,.6); background:rgba(212,175,55,.08); }
+    .acts .ico.del { color:#e0807a; }
+    .acts .ico.del:hover { border-color:rgba(224,96,122,.6); background:rgba(224,96,122,.1); }
 
     .form { max-width:640px; }
     .field { margin-bottom:16px; }
@@ -155,6 +160,6 @@
   </div>
 
   <script src="/admin/config.js"></script>
-  <script type="module" src="/admin/app.js"></script>
+  <script type="module" src="/admin/app.js?v=2"></script>
 </body>
 </html>

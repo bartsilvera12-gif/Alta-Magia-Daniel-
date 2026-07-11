@@ -280,8 +280,8 @@ async function listView(entity) {
         <button title="Bajar" data-move="down" data-id="${r.id}" ${i===list.length-1?'disabled':''}>▼</button>`;
       if (featField) h += `<button title="Destacar" class="${r.is_featured?'on':''}" data-feat="${r.id}">★</button>`;
       if (hasActive) h += `<button title="Activar/Desactivar" class="${r.is_active?'on':''}" data-active="${r.id}">${r.is_active?'●':'○'}</button>`;
-      h += `<a class="mini" href="#/${entity.key}/edit/${r.id}">Editar</a>`;
-      if (canDelete()) h += `<button class="mini del" data-del="${r.id}">Eliminar</button>`;
+      h += `<a class="ico" title="Editar" aria-label="Editar" href="#/${entity.key}/edit/${r.id}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></a>`;
+      if (canDelete()) h += `<button class="ico del" title="Eliminar" aria-label="Eliminar" data-del="${r.id}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>`;
       h += `</td></tr>`;
     });
     h += `</tbody></table>`;
