@@ -82,13 +82,6 @@ const ENTITIES = [
       F('external_url','URL externa','text'),
       F('is_featured','Destacado','bool'), F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
 
-  { key:'testimonials', title:'Testimonios', table:'testimonials', img:'avatar_url',
-    columns:[['client_name','Cliente'],['rating','★'],['is_active','Activo']],
-    fields:[ F('client_name','Cliente','text',{required:true}), F('client_location','Ubicación','text'),
-      F('content','Testimonio','textarea'), F('rating','Puntaje (1-5)','number'),
-      F('avatar_url','Foto','image',{folder:'testimonials'}),
-      F('is_featured','Destacado','bool'), F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
-
   { key:'social', title:'Redes sociales', table:'social_links',
     columns:[['platform','Plataforma'],['url','URL']],
     fields:[ F('platform','Plataforma','text',{required:true}), F('label','Etiqueta','text'),
@@ -232,7 +225,6 @@ async function dashboard() {
     ['Productos activos', await count('products', q=>q.eq('is_active',true))],
     ['Categorías', await count('product_categories')],
     ['Trabajos', await count('works', q=>q.eq('is_active',true))],
-    ['Testimonios', await count('testimonials', q=>q.eq('is_active',true))],
     ['Mensajes nuevos', await count('contact_messages', q=>q.eq('status','new'))],
   ];
   $('#stats').innerHTML = cards.map(c=>`<div class="stat"><div class="n">${c[1]}</div><div class="l">${c[0]}</div></div>`).join('');
