@@ -275,14 +275,14 @@ async function listView(entity) {
         else if (c[0] === 'created_at' && v) v = new Date(v).toLocaleDateString('es-PY');
         h += `<td data-label="${esc(c[1])}">${esc(v==null?'—':v)}</td>`;
       });
-      h += `<td class="ta-r acts" data-label="">`;
+      h += `<td class="ta-r acts" data-label=""><div class="actwrap">`;
       if (canSort) h += `<button title="Subir" data-move="up" data-id="${r.id}" ${i===0?'disabled':''}>▲</button>
         <button title="Bajar" data-move="down" data-id="${r.id}" ${i===list.length-1?'disabled':''}>▼</button>`;
       if (featField) h += `<button class="mini ${r.is_featured?'on':''}" data-feat="${r.id}">${r.is_featured?'Destacado':'Destacar'}</button>`;
       if (hasActive) h += `<button class="mini ${r.is_active?'on':''}" data-active="${r.id}">${r.is_active?'Activo':'Inactivo'}</button>`;
       h += `<a class="mini" href="#/${entity.key}/edit/${r.id}">Editar</a>`;
       if (canDelete()) h += `<button class="mini del" data-del="${r.id}">Eliminar</button>`;
-      h += `</td></tr>`;
+      h += `</div></td></tr>`;
     });
     h += `</tbody></table>`;
     $('#tbl').innerHTML = h;

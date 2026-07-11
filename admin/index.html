@@ -77,8 +77,8 @@
     .ta-r { text-align:right; }
     .thumb { width:56px; height:56px; border-radius:9px; object-fit:cover; border:1px solid var(--line); display:block; }
     .thumb.ph { background:rgba(212,175,55,.06); }
-    .acts { display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:flex-end; }
-    .acts > * { flex:0 0 auto; }
+    .actwrap { display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:flex-end; }
+    .actwrap > * { flex:0 0 auto; }
     .acts button { background:transparent; border:1px solid var(--line); color:var(--muted); width:34px; height:34px; border-radius:8px; cursor:pointer; font-size:14px; }
     .acts button:hover:not(:disabled) { border-color:rgba(212,175,55,.6); color:var(--gold-soft); }
     .acts button:disabled { opacity:.3; cursor:default; }
@@ -135,8 +135,9 @@
       .tbl td.imgcell { justify-content:center; padding-top:12px; }
       .tbl td.imgcell::before { display:none; }
       .tbl td.imgcell .thumb { width:72px; height:72px; }
-      .tbl td.acts { justify-content:flex-start; flex-wrap:wrap; gap:6px; }
+      .tbl td.acts { display:block; }
       .tbl td.acts::before { display:none; }
+      .actwrap { justify-content:flex-start; }
       .form, .search { max-width:100%; }
       .stats { grid-template-columns:1fr 1fr; }
     }
@@ -163,6 +164,6 @@
   </div>
 
   <script src="/admin/config.js"></script>
-  <script type="module" src="/admin/app.js?v=4"></script>
+  <script type="module" src="/admin/app.js?v=5"></script>
 </body>
 </html>
