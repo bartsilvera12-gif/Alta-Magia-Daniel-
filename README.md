@@ -1,18 +1,40 @@
 # Alta Magia Daniel
 
 Sitio web oficial de **Alta Magia Daniel** — Tarot y Trabajos Espirituales (Paraguay).
+Página negra y dorada, mística y elegante, con contacto directo por WhatsApp.
 
-Página negra y dorada, de una sola sección, con contacto directo por WhatsApp.
+## Estructura del repo
 
-## Publicar en GitHub Pages
+```
+index.html                 # sitio público (bundle React compilado + parches __amd*)
+servicios/ catalogo/        # rutas físicas (index.html propio con su data JS)
+politicadeprivacidad/
+*.jpg *.png *.mp4           # imágenes / videos / favicon
+supabase/
+  migrations/              # 0001 schema · 0002 RLS (schema aislado altamagiadaniel)
+  seed/                    # 0001 seed del contenido actual (idempotente)
+  create_first_admin.sql   # vincular primer super_admin (sin passwords)
+docs/                      # DATABASE.md · DEPLOYMENT.md · ADMIN_PANEL.md
+.env.example               # variables (Supabase Self-Hosted) — sin secretos
+```
 
-1. Creá un repositorio nuevo en GitHub y subí estos archivos (`index.html`).
-2. En el repositorio, andá a **Settings → Pages**.
-3. En **Source**, elegí la rama `main` y la carpeta `/ (root)`.
-4. Guardá. En unos minutos tu sitio estará disponible en
-   `https://TU-USUARIO.github.io/NOMBRE-DEL-REPO/`
+## Panel administrador (en curso — rama `feature/admin-panel-supabase`)
 
-El archivo `index.html` es autónomo (incluye imágenes y fuentes), así que funciona sin configuración adicional.
+Se está incorporando un panel en `/admin` con **Supabase Self-Hosted** y un
+schema PostgreSQL aislado `altamagiadaniel`. Estado y arquitectura:
+[`docs/ADMIN_PANEL.md`](docs/ADMIN_PANEL.md). Base de datos:
+[`docs/DATABASE.md`](docs/DATABASE.md). Despliegue:
+[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
+- Todas las tablas viven en `altamagiadaniel` (nunca en `public`).
+- Auth con `auth.users`; enlace vía `altamagiadaniel.admin_profiles.user_id`.
+- RLS: público solo lee `is_active`; escritura solo admins activos por rol.
+- Secretos por `.env` (git-ignored); la `service_role` nunca va al navegador.
+
+## Variables de entorno
+
+Copiá `.env.example` → `.env` y completá con tu Supabase. Ver `docs/DATABASE.md`
+para correr migraciones/seed y exponer el schema.
 
 ## Contacto
 
