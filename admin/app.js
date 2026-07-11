@@ -372,9 +372,23 @@ async function formView(entity, id, preloaded) {
     const file = $('#file_'+f.name), hidden = $('#fld_'+f.name), prev = $('#prev_'+f.name);
     file.addEventListener('change', async () => {
       const fl = file.files[0]; if (!fl) return;
-      prev.innerHTML = '<span>subiendo…</span>';
-      try { const url = await uploadFile(fl, f.folder); hidden.value = url; prev.innerHTML = `<img src="${esc(url)}" alt="">`; toast('Imagen subida'); }
-      catch (err) { prev.innerHTML = '<span>error</span>'; toast(err.message||'Error al subir', 'err'); }
+      // vista previa local instantánea (antes de subir)
+      const localUrl = URL.createObjectURL(fl);
+      const isVideo = (fl.type||'').startsWith('video');
+      prev.innerHTML = isVideo
+        ? `<video src="${localUrl}" muted playsinline></video>`
+        : `<img src="${localUrl}" alt="">`;
+      prev.insertAdjacentHTML('beforeend', '<span class="upstat">subiendo…</span>');
+      try {
+        const url = await uploadFile(fl, f.folder);
+        hidden.value = url;
+        const s = prev.querySelector('.upstat'); if (s) { s.textContent = '✓'; s.classList.add('ok'); }
+        toast('Imagen subida');
+      } catch (err) {
+        hidden.value = '';
+        prev.innerHTML = `<span class="upstat err">${esc(err.message || 'Error al subir')}</span>`;
+        toast(err.message || 'Error al subir', 'err');
+      }
     });
   });
   $('#entForm').addEventListener('click', e => { const k = e.target.dataset && e.target.dataset.clear; if (k) { $('#fld_'+k).value=''; $('#prev_'+k).innerHTML='<span>sin imagen</span>'; } });
