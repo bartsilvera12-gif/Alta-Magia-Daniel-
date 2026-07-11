@@ -278,8 +278,8 @@ async function listView(entity) {
       h += `<td class="ta-r acts" data-label="">`;
       if (canSort) h += `<button title="Subir" data-move="up" data-id="${r.id}" ${i===0?'disabled':''}>▲</button>
         <button title="Bajar" data-move="down" data-id="${r.id}" ${i===list.length-1?'disabled':''}>▼</button>`;
-      if (featField) h += `<button title="Destacar" class="${r.is_featured?'on':''}" data-feat="${r.id}">★</button>`;
-      if (hasActive) h += `<button title="Activar/Desactivar" class="${r.is_active?'on':''}" data-active="${r.id}">${r.is_active?'●':'○'}</button>`;
+      if (featField) h += `<button class="mini ${r.is_featured?'on':''}" data-feat="${r.id}">${r.is_featured?'Destacado':'Destacar'}</button>`;
+      if (hasActive) h += `<button class="mini ${r.is_active?'on':''}" data-active="${r.id}">${r.is_active?'Activo':'Inactivo'}</button>`;
       h += `<a class="mini" href="#/${entity.key}/edit/${r.id}">Editar</a>`;
       if (canDelete()) h += `<button class="mini del" data-del="${r.id}">Eliminar</button>`;
       h += `</td></tr>`;
