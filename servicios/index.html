@@ -309,20 +309,24 @@
     };
 
     var grid = document.getElementById('grid');
-    SERVICES.forEach(function(s){
-      var a = document.createElement('div');
-      a.className = 'card';
-      var link = WA + '?text=' + encodeURIComponent('Hola, me interesa el servicio: ' + s.title);
-      a.innerHTML =
-        '<div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>' +
-        '<div class="imgwrap"><img src="' + esc(s.img) + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async"></div>' +
-        '<div class="body">' +
-          '<h3>' + esc(s.title) + '</h3>' +
-          '<p>' + esc(s.desc) + '</p>' +
-          '<button type="button" class="details" data-title="' + esc(s.title) + '">Ver más detalles</button>' +
-        '</div>';
-      grid.appendChild(a);
-    });
+    function renderServices(){
+      grid.innerHTML = '';
+      SERVICES.forEach(function(s){
+        var a = document.createElement('div');
+        a.className = 'card';
+        a.innerHTML =
+          '<div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>' +
+          '<div class="imgwrap"><img src="' + esc(s.img) + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async"></div>' +
+          '<div class="body">' +
+            '<h3>' + esc(s.title) + '</h3>' +
+            '<p>' + esc(s.desc) + '</p>' +
+            '<button type="button" class="details" data-title="' + esc(s.title) + '">Ver más detalles</button>' +
+          '</div>';
+        grid.appendChild(a);
+      });
+    }
+    window.renderServices = renderServices;
+    renderServices();
 
     // Modal wiring
     var modal = document.getElementById('modal');
@@ -350,6 +354,33 @@
     modal.querySelector('.x').addEventListener('click', closeModal);
     modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+  </script>
+
+  <!-- Load live services from Supabase (falls back to the static list on error) -->
+  <script src="/supabase-config.js"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const cfg = window.AMD_SUPABASE || {};
+    if (cfg.url && cfg.anonKey && window.SERVICES && window.renderServices) {
+      try {
+        const sb = createClient(cfg.url, cfg.anonKey, { db: { schema: cfg.schema || 'altamagiadaniel' } });
+        const { data } = await sb.from('services')
+          .select('name,cover_image_url,short_description,full_description')
+          .eq('is_active', true).order('sort_order', { ascending: true });
+        if (data && data.length) {
+          const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          window.SERVICES.length = 0;
+          data.forEach(s => {
+            window.SERVICES.push({ title: s.name, img: s.cover_image_url || '', desc: s.short_description || '' });
+            if (s.full_description && !window.RICH[s.name]) {
+              window.RICH[s.name] = '<div style="font-size:16px;line-height:1.7;color:#cbbfa4;text-align:center;">'
+                + escHtml(s.full_description).replace(/\n/g,'<br>') + '</div>';
+            }
+          });
+          window.renderServices();
+        }
+      } catch (e) { /* keep the static fallback list */ }
+    }
   </script>
 </body>
 </html>

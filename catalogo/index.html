@@ -395,5 +395,41 @@
     renderGrid();
     updateCartBadge();
   </script>
+
+  <!-- Load live content from Supabase (falls back to the static list above on error) -->
+  <script src="/supabase-config.js"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const cfg = window.AMD_SUPABASE || {};
+    if (cfg.url && cfg.anonKey && window.PRODUCTS) {
+      try {
+        const sb = createClient(cfg.url, cfg.anonKey, { db: { schema: cfg.schema || 'altamagiadaniel' } });
+        const [catsR, prodsR] = await Promise.all([
+          sb.from('product_categories').select('id,slug,name').eq('is_active', true).order('sort_order', { ascending: true }),
+          sb.from('products').select('id,category_id,name,cover_image_url,short_description').eq('is_active', true).order('sort_order', { ascending: true })
+        ]);
+        const prods = prodsR.data, cats = catsR.data || [];
+        if (prods && prods.length) {
+          const catSlug = {}, catName = {};
+          cats.forEach(c => { catSlug[c.id] = c.slug; catName[c.slug] = c.name; });
+          window.PRODUCTS.length = 0;
+          prods.forEach(p => window.PRODUCTS.push({
+            id: p.id, cat: catSlug[p.category_id] || 'otros',
+            name: p.name, img: p.cover_image_url || '', desc: p.short_description || ''
+          }));
+          Object.keys(catName).forEach(s => { window.CAT_LABEL[s] = catName[s]; });
+          const fe = document.getElementById('filters');
+          if (fe && cats.length) {
+            let h = '<button class="pill active" data-cat="todos">TODOS</button>';
+            cats.forEach(c => { h += '<button class="pill" data-cat="' + c.slug + '">' + String(c.name || c.slug).toUpperCase() + '</button>'; });
+            h += '<button class="pill fav" id="favFilter" data-cat="favoritos">♥ FAVORITOS</button>';
+            fe.innerHTML = h;
+          }
+          window.filter = 'todos';
+          window.renderGrid();
+        }
+      } catch (e) { /* keep the static fallback list */ }
+    }
+  </script>
 </body>
 </html>
