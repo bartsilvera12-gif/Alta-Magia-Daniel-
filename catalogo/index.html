@@ -291,6 +291,7 @@
           '<div class="body">' +
             '<h3>' + esc(p.name) + '</h3>' +
             (p.desc ? '<div class="pdesc">' + esc(p.desc) + '</div>' : '<div class="pdesc"></div>') +
+            (p.price ? '<div class="price">' + fmt(p.price) + '</div>' : '') +
             '<button class="add-btn" data-add="' + esc(p.id) + '">' +
               '<svg viewBox="0 0 24 24" fill="none" stroke="#0d0a06" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>' +
               'Agregar al carrito' +
@@ -318,6 +319,7 @@
             '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '">' +
             '<div class="di-info">' +
               '<div class="di-name">' + esc(p.name) + '</div>' +
+              (p.price ? '<div class="di-price">' + fmt(p.price) + '</div>' : '') +
               '<div class="qty">' +
                 '<button data-dec="' + esc(id) + '">−</button>' +
                 '<span>' + cart[id] + '</span>' +
@@ -406,7 +408,7 @@
         const sb = createClient(cfg.url, cfg.anonKey, { db: { schema: cfg.schema || 'altamagiadaniel' } });
         const [catsR, prodsR] = await Promise.all([
           sb.from('product_categories').select('id,slug,name').eq('is_active', true).order('sort_order', { ascending: true }),
-          sb.from('products').select('id,category_id,name,cover_image_url,short_description').eq('is_active', true).order('sort_order', { ascending: true })
+          sb.from('products').select('id,category_id,name,cover_image_url,short_description,price,show_price').eq('is_active', true).order('sort_order', { ascending: true })
         ]);
         const prods = prodsR.data, cats = catsR.data || [];
         if (prods && prods.length) {
@@ -415,7 +417,9 @@
           window.PRODUCTS.length = 0;
           prods.forEach(p => window.PRODUCTS.push({
             id: p.id, cat: catSlug[p.category_id] || 'otros',
-            name: p.name, img: p.cover_image_url || '', desc: p.short_description || ''
+            name: p.name, img: p.cover_image_url || '', desc: p.short_description || '',
+            // precio solo si tiene un valor > 0 (si no, no se muestra ningún precio)
+            price: (p.price != null && Number(p.price) > 0) ? Number(p.price) : null
           }));
           Object.keys(catName).forEach(s => { window.CAT_LABEL[s] = catName[s]; });
           const fe = document.getElementById('filters');
