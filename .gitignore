@@ -1,0 +1,21 @@
+# Secrets / environment
+.env
+.env.*
+!.env.example
+
+# Node / build (for the future admin app)
+node_modules/
+.next/
+dist/
+build/
+out/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
