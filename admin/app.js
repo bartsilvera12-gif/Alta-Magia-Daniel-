@@ -151,9 +151,27 @@ async function uploadFile(file, folder) {
   if (file.size > MAX_MB*1024*1024) throw new Error('El archivo supera ' + MAX_MB + ' MB.');
   const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
   const path = (folder||'admin') + '/f' + Date.now() + '-' + Math.random().toString(36).slice(2,8) + '.' + ext;
-  const { error } = await supabase.storage.from(BUCKET).upload(path, file, { cacheControl:'3600', upsert:false, contentType:file.type });
-  if (error) throw error;
-  return supabase.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+  // Direct fetch instead of supabase-js .upload(): the library always sends
+  // `cache-control` and `x-upsert` headers, which are NOT in the storage server's
+  // CORS Access-Control-Allow-Headers list, so the browser blocks the request
+  // ("Failed to fetch"). Here we send only allowed headers.
+  const { data: { session } } = await supabase.auth.getSession();
+  const token = (session && session.access_token) || cfg.anonKey;
+  const res = await fetch(`${cfg.url}/storage/v1/object/${BUCKET}/${path}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'apikey': cfg.anonKey,
+      'Content-Type': file.type || 'application/octet-stream'
+    },
+    body: file
+  });
+  if (!res.ok) {
+    let msg = 'Error ' + res.status;
+    try { const j = await res.json(); msg = j.message || j.error || msg; } catch (e) {}
+    throw new Error(msg);
+  }
+  return `${cfg.url}/storage/v1/object/public/${BUCKET}/${path}`;
 }
 
 /* --------------------------------- boot ----------------------------------- */
@@ -386,8 +404,11 @@ async function formView(entity, id, preloaded) {
         toast('Imagen subida');
       } catch (err) {
         hidden.value = '';
-        prev.innerHTML = `<span class="upstat err">${esc(err.message || 'Error al subir')}</span>`;
-        toast(err.message || 'Error al subir', 'err');
+        const s = prev.querySelector('.upstat');
+        const txt = err.message || 'Error al subir';
+        if (s) { s.textContent = txt; s.className = 'upstat bad'; }
+        else prev.insertAdjacentHTML('beforeend', `<span class="upstat bad">${esc(txt)}</span>`);
+        toast(txt, 'err');
       }
     });
   });
