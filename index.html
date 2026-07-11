@@ -1339,6 +1339,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       __amdRenameSobreNav();
       __amdFixServiciosNav();
       __amdInjectCatalogNav();
+      __amdApplyNavOrder();
       __amdInjectHamburger();
       __amdHideDiamondDivider();
       __amdFixHeaderLogo();
@@ -1355,15 +1356,43 @@ document.addEventListener('DOMContentLoaded', async function() {
     var __AMD_URL = 'https://api.neura.com.py';
     var __AMD_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzc0MTAxNDYxLCJleHAiOjE5MzE3ODE0NjF9.7_wAph8IolPMXtgfpezSwS5XR62IdD__qhqCywLDp3Q';
     function __amdRest(p){ return fetch(__AMD_URL + '/rest/v1/' + p, { headers: { apikey: __AMD_ANON, Authorization: 'Bearer ' + __AMD_ANON, 'Accept-Profile': 'altamagiadaniel' } }).then(function(r){ return r.ok ? r.json() : []; }); }
+    // ---- Header nav order from Supabase ----
+    var __amdNavOrder = null; // [{href,label}] in sort_order once loaded
+    function __amdNavKey(h){
+      if (!h) return '';
+      h = String(h).trim();
+      if (h.indexOf('wa.me') >= 0 || h.toLowerCase().indexOf('whatsapp') >= 0) return 'whatsapp';
+      if (h.charAt(0) === '#') return h.toLowerCase();
+      try { var u = new URL(h, location.origin); return ((u.hash || u.pathname) || '/').replace(/\/+$/,'').toLowerCase() || '/'; }
+      catch (e) { return h.toLowerCase(); }
+    }
+    var __amdApplyNavOrder = function(){
+      if (!__amdNavOrder || !__amdNavOrder.length) return;
+      var nav = document.querySelector('header nav'); if (!nav) return;
+      var anchors = Array.prototype.slice.call(nav.querySelectorAll('a'));
+      if (!anchors.length) return;
+      var byKey = {};
+      anchors.forEach(function(a){ var k = __amdNavKey(a.getAttribute('href')); if (k && !(k in byKey)) byKey[k] = a; });
+      var desired = [];
+      __amdNavOrder.forEach(function(it){ var a = byKey[__amdNavKey(it.href)]; if (a && desired.indexOf(a) < 0) desired.push(a); });
+      if (desired.length < 2) return;
+      // ¿ya están en el orden deseado? (evita mutar el DOM en loop con el observer)
+      var current = anchors.filter(function(a){ return desired.indexOf(a) >= 0; });
+      var same = current.length === desired.length && current.every(function(a, i){ return a === desired[i]; });
+      if (same) return;
+      desired.forEach(function(a){ nav.appendChild(a); });
+    };
     var __amdSupaLoaded = false;
     function __amdLoadFromSupabase(){
       if (__amdSupaLoaded) return; __amdSupaLoaded = true;
       Promise.all([
         __amdRest('works?select=title,media_url,thumbnail_url&is_active=eq.true&order=sort_order.asc'),
-        __amdRest('products?select=name,cover_image_url,is_featured&is_active=eq.true&order=sort_order.asc')
+        __amdRest('products?select=name,cover_image_url,is_featured&is_active=eq.true&order=sort_order.asc'),
+        __amdRest('navigation_items?select=label,href,sort_order&is_active=eq.true&order=sort_order.asc')
       ]).then(function(res){
         try {
-          var works = res[0] || [], prods = res[1] || [];
+          var works = res[0] || [], prods = res[1] || [], nav = res[2] || [];
+          if (nav.length) { __amdNavOrder = nav; __amdApplyNavOrder(); }
           if (works.length) {
             __amdTrabajos = works.map(function(w){ return { mp4: w.media_url, img: w.thumbnail_url, caption: (w.title || 'Trabajo realizado') }; });
             var ts = document.getElementById('amd-trabajos-section'); if (ts) ts.remove();
