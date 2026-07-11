@@ -117,7 +117,7 @@ const ENTITIES = [
       F('message','Mensaje','textarea',{readOnly:true}),
       F('status','Estado','select',{options:['new','read','replied','archived']}), F('notes','Notas','textarea') ] },
 
-  { key:'admins', title:'Administradores', table:'admin_profiles', superOnly:true, noCreate:true,
+  { key:'admins', title:'Administradores', table:'admin_profiles', superOnly:true, noCreate:true, order:'created_at',
     columns:[['full_name','Nombre'],['role','Rol'],['is_active','Activo']],
     fields:[ F('full_name','Nombre','text'), F('role','Rol','select',{options:['super_admin','admin','editor']}),
       F('is_active','Activo','bool') ] },
@@ -338,6 +338,7 @@ async function formView(entity, id, preloaded) {
     row = data || {};
   }
   const isEdit = !!id;
+  if (!isEdit) { if (row.is_active === undefined) row.is_active = true; if (row.is_visible === undefined) row.is_visible = true; }
   const backHash = entity.singleton ? '#/' : `#/${entity.key}`;
 
   // build fields html
@@ -396,6 +397,7 @@ async function formView(entity, id, preloaded) {
       else if (f.type === 'number') v = el.value === '' ? null : Number(el.value);
       else if (f.type === 'fk') v = el.value || null;
       else v = el.value === '' ? null : el.value;
+      if (f.name === 'sort_order' && v == null) v = 0;   // NOT NULL column
       payload[f.name] = v;
     }
     // required check
