@@ -805,6 +805,38 @@ document.addEventListener('DOMContentLoaded', async function() {
       if (waBtn.nextSibling) waBtn.parentNode.insertBefore(wrapper, waBtn.nextSibling);
       else waBtn.parentNode.appendChild(wrapper);
     };
+    // Alta Magia: add Instagram link to the contact section (below the TikTok link)
+    var __amdInjectInstagram = function() {
+      if (document.getElementById('amd-instagram-link')) return;
+      var contacto = document.getElementById('contacto');
+      if (!contacto) return;
+      var waBtn = contacto.querySelector('a[href*="wa.me"]');
+      if (!waBtn) return;
+      var ig = document.createElement('a');
+      ig.id = 'amd-instagram-link';
+      ig.href = 'https://www.instagram.com/altamagiadaniel';
+      ig.target = '_blank';
+      ig.rel = 'noopener';
+      ig.setAttribute('style', 'display:inline-flex;align-items:center;gap:14px;font-family:\'Cinzel\',serif;font-weight:600;font-size:clamp(16px,2.4vw,20px);letter-spacing:1px;color:#f3d987;background:linear-gradient(135deg,rgba(0,0,0,.65),rgba(20,20,20,.85));border:1px solid rgba(212,175,55,.5);padding:14px 34px;border-radius:999px;margin:16px auto 0;box-shadow:0 12px 34px rgba(212,175,55,.15);text-decoration:none;');
+      ig.innerHTML =
+        '<span style="display:inline-flex;width:32px;height:32px;border-radius:50%;background:#000;align-items:center;justify-content:center;">' +
+          '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.5" stroke="#f3d987" stroke-width="1.7"/>' +
+            '<circle cx="12" cy="12" r="4.2" stroke="#f3d987" stroke-width="1.7"/>' +
+            '<circle cx="17.3" cy="6.7" r="1.25" fill="#f3d987"/>' +
+          '</svg>' +
+        '</span>' +
+        'Seguime en Instagram';
+      var wrapper = document.createElement('div');
+      wrapper.style.cssText = 'text-align:center;width:100%;';
+      wrapper.appendChild(ig);
+      // Colocar después del link de TikTok si existe; si no, después del botón de WhatsApp.
+      var ttLink = document.getElementById('amd-tiktok-link');
+      var afterEl = (ttLink && ttLink.parentNode) ? ttLink.parentNode : waBtn;
+      var parent = afterEl.parentNode;
+      if (afterEl.nextSibling) parent.insertBefore(wrapper, afterEl.nextSibling);
+      else parent.appendChild(wrapper);
+    };
     // Hide the standalone "+595 972 542230" phone line under the hero's WhatsApp button
     // (leaves the WhatsApp button itself, which also shows the number, untouched).
     var __amdHidePhoneLine = function() {
@@ -1332,7 +1364,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     };
     var __amdRun = function() {
-      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectCatalogPreview(); __amdInjectTrabajos(); __amdKeepTrabajosPlaying(); __amdInjectTikTok(); __amdRestyleFloat(); __amdHidePhoneLine();
+      __amdSwapCards(); __amdInjectExtraCards(); __amdEnhanceTarotSection(); __amdInjectPactoSection(); __amdInjectCatalogPreview(); __amdInjectTrabajos(); __amdKeepTrabajosPlaying(); __amdInjectTikTok(); __amdInjectInstagram(); __amdRestyleFloat(); __amdHidePhoneLine();
       __amdServicesPreview();
       __amdRemoveKickerDashes('TAROT Y TRABAJOS ESPIRITUALES');
       __amdRemoveKickerDashes('LES OFRECE');
