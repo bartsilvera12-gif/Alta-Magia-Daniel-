@@ -68,7 +68,7 @@
 
     .search { width:100%; max-width:340px; margin-bottom:14px; background:rgba(0,0,0,.4); border:1px solid var(--line); border-radius:10px; padding:10px 13px; color:#f4ecd8; font-family:'Cormorant Garamond',serif; font-size:16px; outline:none; }
     .search:focus { border-color:rgba(212,175,55,.6); }
-    .tbl-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+    .tbl-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; width:fit-content; max-width:100%; margin-inline:auto; }
     .tbl { width:auto; border-collapse:collapse; font-size:16px; }
     .tbl th { text-align:left; font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; color:var(--muted); padding:14px 22px 14px 0; border-bottom:1px solid var(--line); white-space:nowrap; }
     .tbl td { padding:13px 22px 13px 0; border-bottom:1px solid rgba(212,175,55,.08); vertical-align:middle; }
@@ -103,6 +103,12 @@
     .field textarea { resize:vertical; line-height:1.5; }
     .field input:focus, .field textarea:focus, .field select:focus { border-color:rgba(212,175,55,.6); }
     .field input[readonly], .field textarea[readonly] { opacity:.7; }
+    /* Selectores: flecha dorada propia y lista desplegable oscura (en vez del azul/gris del navegador) */
+    .field select { -webkit-appearance:none; -moz-appearance:none; appearance:none; cursor:pointer; padding-right:40px;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23e8c874" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+      background-repeat:no-repeat; background-position:right 14px center; }
+    .field select option { background-color:#0d0a07; color:#f4ecd8; }
+    .field select option:checked { background-color:rgba(212,175,55,.20); color:#f3d987; }
     .switch { display:inline-flex; align-items:center; gap:10px; cursor:pointer; }
     .switch input { width:18px; height:18px; accent-color:#d4af37; }
     .help { font-size:13px; color:var(--muted); margin-top:4px; font-style:italic; }
@@ -112,7 +118,10 @@
     .img-prev .upstat { position:absolute; left:0; right:0; bottom:0; background:rgba(0,0,0,.78); color:var(--gold-soft); font-family:'Cinzel',serif; font-size:9px; letter-spacing:.4px; text-align:center; padding:3px 2px; line-height:1.2; max-height:100%; overflow:auto; }
     .img-prev .upstat.ok { color:#8fe0a0; }
     .img-prev .upstat.bad { color:#ff9a9a; font-size:8px; letter-spacing:0; }
-    .img-field input[type=file] { font-size:13px; color:var(--muted); }
+    .img-field input[type=file] { font-size:13px; color:var(--muted); max-width:100%; }
+    .img-field input[type=file]::file-selector-button { font-family:'Cinzel',serif; font-size:11px; letter-spacing:1px; color:var(--gold-soft); background:transparent; border:1px solid var(--line); padding:9px 15px; border-radius:8px; cursor:pointer; margin-right:12px; }
+    .img-field input[type=file]::file-selector-button:hover { border-color:rgba(212,175,55,.6); color:var(--gold-bright); }
+    .img-field input[type=file]::-webkit-file-upload-button { font-family:'Cinzel',serif; font-size:11px; letter-spacing:1px; color:var(--gold-soft); background:transparent; border:1px solid var(--line); padding:9px 15px; border-radius:8px; cursor:pointer; margin-right:12px; }
     .form-actions { display:flex; gap:12px; align-items:center; margin-top:22px; }
 
     .modal-ov { position:fixed; inset:0; background:rgba(0,0,0,.72); display:flex; align-items:center; justify-content:center; z-index:100; padding:20px; }
@@ -129,7 +138,7 @@
       main#view { padding:20px 14px 50px; }
       header { padding:14px 16px; }
       .head-row { flex-wrap:wrap; }
-      .tbl-wrap { overflow:visible; border:none; }
+      .tbl-wrap { overflow:visible; border:none; width:auto; }
       .tbl, .tbl tbody, .tbl tr, .tbl td { display:block; width:100%; }
       .tbl thead { position:absolute; left:-9999px; }
       .tbl tr { border:1px solid var(--line); border-radius:12px; margin-bottom:12px; padding:4px 4px 8px; background:var(--card); }
