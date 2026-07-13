@@ -58,10 +58,10 @@ const ENTITIES = [
       F('show_price','Mostrar precio','bool'), F('price','Precio','number'),
       F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
 
-  { key:'product_categories', title:'Categorías', table:'product_categories', img:'image_url', group:'Catálogo',
+  { key:'product_categories', title:'Categorías', table:'product_categories', group:'Catálogo',
     columns:[['name','Nombre'],['slug','Slug']],
     fields:[ F('name','Nombre','text',{required:true}), F('slug','Slug (único)','text',{required:true}),
-      F('description','Descripción','textarea'), F('image_url','Imagen','image',{folder:'categories'}),
+      F('description','Descripción','textarea'),
       F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
 
   { key:'products', title:'Productos', table:'products', img:'cover_image_url', group:'Catálogo',
