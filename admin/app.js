@@ -94,7 +94,7 @@ const ENTITIES = [
       F('target','Abrir en','select',{options:['_self','_blank']}),
       F('sort_order','Orden','number'), F('is_visible','Visible','bool'), F('is_active','Activo','bool') ] },
 
-  { key:'settings', title:'Configuración', table:'site_settings', singleton:true,
+  { key:'settings', title:'Configuración', table:'site_settings', singleton:true, hidden:true,
     fields:[ F('site_name','Nombre del sitio','text'), F('site_subtitle','Subtítulo','text'),
       F('logo_url','Logo','image',{folder:'site'}), F('favicon_url','Favicon','image',{folder:'site'}),
       F('whatsapp_number','WhatsApp (número)','text'), F('whatsapp_default_message','Mensaje WhatsApp por defecto','text'),
