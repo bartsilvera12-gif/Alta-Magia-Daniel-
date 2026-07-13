@@ -50,7 +50,7 @@ const ENTITIES = [
       F('show_price','Mostrar precio','bool'), F('price','Precio','number'),
       F('is_featured','Destacado','bool'), F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
 
-  { key:'tarot', title:'Tarot', table:'tarot_services',
+  { key:'tarot', title:'Tarot', table:'tarot_services', hidden:true,
     columns:[['name','Nombre'],['is_active','Activo']],
     fields:[ F('name','Nombre','text',{required:true}), F('slug','Slug (único)','text',{required:true}),
       F('short_description','Descripción corta','textarea'), F('full_description','Descripción','textarea'),
@@ -88,7 +88,7 @@ const ENTITIES = [
       F('url','URL','text',{required:true}), F('username','Usuario','text'),
       F('sort_order','Orden','number'), F('is_visible','Visible','bool'), F('is_active','Activo','bool') ] },
 
-  { key:'navigation', title:'Navegación', table:'navigation_items',
+  { key:'navigation', title:'Navegación', table:'navigation_items', hidden:true,
     columns:[['label','Etiqueta'],['href','Destino']],
     fields:[ F('label','Etiqueta','text',{required:true}), F('href','Destino (href)','text',{required:true}),
       F('target','Abrir en','select',{options:['_self','_blank']}),
@@ -103,14 +103,14 @@ const ENTITIES = [
       F('developed_by_url','Desarrollado por (URL)','text'),
       F('seo_title','SEO título','text'), F('seo_description','SEO descripción','textarea') ] },
 
-  { key:'messages', title:'Mensajes', table:'contact_messages', noCreate:true, order:'created_at',
+  { key:'messages', title:'Mensajes', table:'contact_messages', noCreate:true, hidden:true, order:'created_at',
     columns:[['full_name','Nombre'],['subject','Asunto'],['status','Estado']],
     fields:[ F('full_name','Nombre','text',{readOnly:true}), F('phone','Teléfono','text',{readOnly:true}),
       F('email','Email','text',{readOnly:true}), F('subject','Asunto','text',{readOnly:true}),
       F('message','Mensaje','textarea',{readOnly:true}),
       F('status','Estado','select',{options:['new','read','replied','archived']}), F('notes','Notas','textarea') ] },
 
-  { key:'admins', title:'Administradores', table:'admin_profiles', superOnly:true, noCreate:true, order:'created_at',
+  { key:'admins', title:'Administradores', table:'admin_profiles', superOnly:true, noCreate:true, hidden:true, order:'created_at',
     columns:[['full_name','Nombre'],['role','Rol'],['is_active','Activo']],
     fields:[ F('full_name','Nombre','text'), F('role','Rol','select',{options:['super_admin','admin','editor']}),
       F('is_active','Activo','bool') ] },
