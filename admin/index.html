@@ -40,7 +40,7 @@
     .role { font-family:'Cinzel',serif; font-size:9px; letter-spacing:1.5px; color:#0d0a06; background:linear-gradient(135deg,#fbf0c4,#e6c56e,#b98d22); padding:3px 9px; border-radius:999px; margin-left:8px; }
     .logout { cursor:pointer; font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; color:var(--gold-soft); background:transparent; border:1px solid var(--line); padding:8px 15px; border-radius:999px; }
     .logout:hover { border-color:rgba(212,175,55,.6); }
-    main#view { padding:26px 32px 60px; max-width:1200px; }
+    main#view { padding:26px 32px 60px; max-width:1200px; margin-inline:auto; }
 
     .crumbs { font-family:'Cinzel',serif; font-size:10px; letter-spacing:2px; color:var(--muted); margin-bottom:10px; text-transform:uppercase; }
     .crumbs a { color:var(--gold-soft); text-decoration:none; }
@@ -58,7 +58,7 @@
     .btn-danger { font-family:'Cinzel',serif; font-size:11px; letter-spacing:1px; color:#fff; cursor:pointer;
       background:linear-gradient(135deg,#c0392b,#7c211a); border:none; padding:11px 20px; border-radius:999px; }
 
-    .stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; max-width:820px; }
+    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
     .stat { border:1px solid var(--line); border-radius:14px; padding:16px 18px; background:var(--card); }
     .stat .n { font-family:'Cinzel',serif; font-weight:800; font-size:28px; color:var(--gold-bright); }
     .stat .l { font-size:13px; color:var(--muted); margin-top:2px; }
@@ -167,6 +167,6 @@
   </div>
 
   <script src="/admin/config.js"></script>
-  <script type="module" src="/admin/app.js?v=14"></script>
+  <script type="module" src="/admin/app.js?v=15"></script>
 </body>
 </html>
