@@ -21,21 +21,21 @@ const refCache = {};         // fk options cache
 const F = (name, label, type, extra = {}) => ({ name, label, type, ...extra });
 
 const ENTITIES = [
-  { key:'hero', title:'Portada', table:'hero_slides', icon:'★', img:'desktop_image_url',
+  { key:'hero', title:'Portada', table:'hero_slides', icon:'★', img:'desktop_image_url', hidden:true,
     columns:[['title','Título'],['subtitle','Subtítulo']],
     fields:[ F('eyebrow','Bajada (arriba del título)','text'), F('title','Título','text'),
       F('subtitle','Subtítulo','text'), F('description','Descripción','textarea'),
       F('desktop_image_url','Imagen','image',{folder:'hero'}),
       F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
 
-  { key:'about', title:'Sobre mí', table:'about_sections', img:'image_url',
+  { key:'about', title:'Sobre mí', table:'about_sections', img:'image_url', hidden:true,
     columns:[['section_key','Clave'],['title','Título']],
     fields:[ F('section_key','Clave (única)','text',{required:true}), F('title','Título','text'),
       F('subtitle','Subtítulo','text'), F('content','Contenido','textarea'),
       F('quote','Frase','text'), F('image_url','Imagen','image',{folder:'about'}),
       F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
 
-  { key:'service_categories', title:'Cat. de servicios', table:'service_categories',
+  { key:'service_categories', title:'Cat. de servicios', table:'service_categories', hidden:true,
     columns:[['name','Nombre'],['slug','Slug']],
     fields:[ F('name','Nombre','text',{required:true}), F('slug','Slug (único)','text',{required:true}),
       F('description','Descripción','textarea'), F('sort_order','Orden','number'), F('is_active','Activo','bool') ] },
@@ -197,7 +197,7 @@ async function uploadFile(file, folder) {
 function canDelete() { return ME && (ME.role === 'super_admin' || ME.role === 'admin'); }
 
 function buildSidebar() {
-  const items = ENTITIES.filter(e => !e.superOnly || ME.role === 'super_admin');
+  const items = ENTITIES.filter(e => !e.hidden && (!e.superOnly || ME.role === 'super_admin'));
   let html = `<a href="#/" data-nav>Dashboard</a>`;
   let lastGroup = null;
   for (const e of items) {
@@ -215,7 +215,7 @@ function route() {
   if (!parts.length) { setActive(''); return dashboard(); }
   const [key, action, id] = parts;
   const entity = byKey(key);
-  if (!entity || (entity.superOnly && ME.role !== 'super_admin')) { location.hash = '#/'; return; }
+  if (!entity || entity.hidden || (entity.superOnly && ME.role !== 'super_admin')) { location.hash = '#/'; return; }
   setActive(key);
   if (action === 'new') return formView(entity, null);
   if (action === 'edit' && id) return formView(entity, id);
@@ -236,7 +236,7 @@ async function dashboard() {
     <div class="stats" id="stats"></div>
     <div class="qa"><a class="chip" href="#/products/new">+ Producto</a><a class="chip" href="#/services/new">+ Servicio</a>
       <a class="chip" href="#/product_categories/new">+ Categoría</a>
-      <a class="chip" href="#/works/new">+ Trabajo</a><a class="chip" href="#/hero">Editar portada</a>
+      <a class="chip" href="#/works/new">+ Trabajo</a>
       <a class="chip" href="/" target="_blank" rel="noopener">Ver sitio ↗</a></div>`;
   const count = async (t, f) => { let q = supabase.from(t).select('*',{count:'exact',head:true}); if (f) q = f(q); const { count:c } = await q; return c ?? 0; };
   const cards = [
