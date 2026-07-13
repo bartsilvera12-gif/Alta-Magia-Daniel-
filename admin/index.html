@@ -68,16 +68,15 @@
 
     .search { width:100%; max-width:340px; margin-bottom:14px; background:rgba(0,0,0,.4); border:1px solid var(--line); border-radius:10px; padding:10px 13px; color:#f4ecd8; font-family:'Cormorant Garamond',serif; font-size:16px; outline:none; }
     .search:focus { border-color:rgba(212,175,55,.6); }
-    .tbl-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; width:fit-content; max-width:100%; margin-inline:auto; }
-    .tbl { width:auto; border-collapse:collapse; font-size:16px; }
-    .tbl th { text-align:left; font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; color:var(--muted); padding:14px 22px 14px 0; border-bottom:1px solid var(--line); white-space:nowrap; }
-    .tbl td { padding:13px 22px 13px 0; border-bottom:1px solid rgba(212,175,55,.08); vertical-align:middle; }
-    .tbl td:first-child, .tbl th:first-child { padding-left:22px; }
+    .tbl-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; width:100%; }
+    .tbl { width:100%; border-collapse:collapse; font-size:16px; }
+    .tbl th { text-align:center; font-family:'Cinzel',serif; font-size:11px; letter-spacing:1.5px; color:var(--muted); padding:14px 16px; border-bottom:1px solid var(--line); white-space:nowrap; }
+    .tbl td { text-align:center; padding:13px 16px; border-bottom:1px solid rgba(212,175,55,.08); vertical-align:middle; }
     .tbl tr:last-child td { border-bottom:none; }
-    .ta-r { text-align:right; }
-    .thumb { width:56px; height:56px; border-radius:9px; object-fit:cover; border:1px solid var(--line); display:block; }
+    .ta-r { text-align:center; }
+    .thumb { width:56px; height:56px; border-radius:9px; object-fit:cover; border:1px solid var(--line); display:block; margin:0 auto; }
     .thumb.ph { background:rgba(212,175,55,.06); }
-    .actwrap { display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:flex-end; }
+    .actwrap { display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:center; }
     .actwrap > * { flex:0 0 auto; }
     .acts button:not(.mini) { background:transparent; border:1px solid var(--line); color:var(--muted); width:34px; height:34px; border-radius:8px; cursor:pointer; font-size:14px; }
     .acts button:not(.mini):hover:not(:disabled) { border-color:rgba(212,175,55,.6); color:var(--gold-soft); }
