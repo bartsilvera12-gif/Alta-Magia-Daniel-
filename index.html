@@ -1024,6 +1024,15 @@ document.addEventListener('DOMContentLoaded', async function() {
           spans[i].style.display = 'none';
         }
       }
+      // Ocultar los placeholders de precio "Consultar" de las cajas de tarot
+      // (LECTURA NORMAL / EXTENSA). Solo <div> hoja con texto exacto "Consultar";
+      // el botón "Consultar" del WhatsApp es un <a>, así que no se toca.
+      var divs = document.querySelectorAll('div');
+      for (var j = 0; j < divs.length; j++) {
+        if (divs[j].children.length === 0 && (divs[j].textContent || '').trim() === 'Consultar') {
+          divs[j].style.display = 'none';
+        }
+      }
     };
     // Add a "Ver más detalles" expandable panel to the "Destrabe y Apertura de Caminos" card
     var __amdDestrabeDetailsHTML =
