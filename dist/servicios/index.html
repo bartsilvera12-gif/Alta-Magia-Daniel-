@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Servicios · Alta Magia Daniel</title>
+  <link rel="icon" type="image/png" href="/favicon-md.png?v=20260710">
+  <link rel="apple-touch-icon" href="/favicon-md.png?v=20260710">
+  <meta name="description" content="Todos los servicios de Alta Magia Daniel — Tarot y Trabajos Espirituales · Paraguay.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:ital@0;1&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #d4af37; --gold-soft: #e8c874; --gold-bright: #f3d987;
+      --text: #cbbfa4; --muted: #8f8570; --line: rgba(212,175,55,.22);
+    }
+    html { background: #000; }
+    body {
+      min-height: 100vh; color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: linear-gradient(rgba(0,0,0,.72), rgba(0,0,0,.82)), url('/fondo-altar.jpg?v=8') center top / cover fixed, #060403;
+      padding-bottom: 110px;
+    }
+    a { text-decoration: none; }
+    /* Header */
+    header {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 16px clamp(16px, 5vw, 48px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(6,4,3,.55); position: sticky; top: 0; z-index: 20; backdrop-filter: blur(6px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(212,175,55,.6); box-shadow: 0 0 18px rgba(212,175,55,.35); background: #000; }
+    .brand b { font-family: 'Cinzel', serif; font-weight: 700; font-size: 15px; letter-spacing: 2px; color: var(--gold-bright); line-height: 1.1; }
+    .brand span { display: block; font-size: 11px; letter-spacing: 3px; color: var(--muted); }
+    .home-link { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: var(--text); border: 1px solid var(--line); padding: 9px 18px; border-radius: 999px; white-space: nowrap; }
+    .home-link:hover { color: var(--gold-bright); border-color: rgba(212,175,55,.55); }
+    /* Title */
+    .hero { text-align: center; padding: clamp(36px, 7vw, 70px) 20px 10px; }
+    .hero .kicker { font-family: 'Cinzel', serif; font-weight: 700; font-size: 12px; letter-spacing: 6px; color: var(--gold); text-shadow: 0 1px 3px rgba(0,0,0,.55); }
+    .hero h1 {
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: clamp(34px, 7vw, 60px); margin-top: 10px;
+      background: linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p { max-width: 640px; margin: 14px auto 0; font-size: clamp(16px, 2vw, 19px); color: var(--text); font-style: italic; }
+    .rule { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 18px 0 0; color: var(--gold); }
+    .rule span { height: 1px; width: 46px; }
+    .rule span:first-child { background: linear-gradient(90deg, transparent, var(--gold)); }
+    .rule span:last-child { background: linear-gradient(90deg, var(--gold), transparent); }
+    /* Grid */
+    .grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 20px; max-width: 1560px; margin: 40px auto 0; padding: 0 clamp(16px, 4vw, 40px);
+    }
+    @media (max-width: 1240px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 980px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    .card {
+      position: relative; display: flex; flex-direction: column; overflow: hidden;
+      border-radius: 14px; border: 1px solid rgba(212,175,55,.3); background: #0d0a07;
+      box-shadow: 0 16px 40px rgba(0,0,0,.5); transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+    .card:hover { transform: translateY(-8px); border-color: rgba(212,175,55,.7); box-shadow: 0 24px 55px rgba(0,0,0,.6); }
+    .card .imgwrap { aspect-ratio: 941 / 1200; overflow: hidden; background: #0a0503; }
+    .card .imgwrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card .body { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+    .card h3 { font-family: 'Cinzel', serif; font-weight: 700; font-size: 20px; letter-spacing: .5px; color: var(--gold-bright); line-height: 1.2; }
+    .card p { font-size: 16px; line-height: 1.55; color: var(--text); margin-top: 10px; flex: 1; }
+    .card .cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 16px;
+      font-family: 'Cinzel', serif; font-weight: 600; font-size: 13px; letter-spacing: 1.5px; color: #0d0a06;
+      background: linear-gradient(135deg,#fbf0c4,#e6c56e,#b98d22); padding: 12px 18px; border-radius: 999px;
+      box-shadow: 0 10px 26px rgba(212,175,55,.3);
+    }
+    .card .cta:hover { filter: brightness(1.06); }
+    .card .cta .wa { display: inline-flex; width: 22px; height: 22px; border-radius: 50%; background: #25d366; align-items: center; justify-content: center; }
+    .card .cta .wa svg { width: 14px; height: 14px; }
+    .card .details {
+      display: inline-flex; align-items: center; justify-content: center; margin-top: 12px;
+      font-family: 'Cinzel', serif; font-weight: 600; font-size: 12px; letter-spacing: 1.5px; color: var(--gold-soft);
+      background: transparent; border: 1px solid rgba(212,175,55,.45); padding: 11px 18px; border-radius: 999px;
+      cursor: pointer; transition: border-color .25s ease, background .25s ease, color .25s ease;
+    }
+    .card .details:hover { border-color: rgba(212,175,55,.8); background: rgba(212,175,55,.08); color: var(--gold-bright); }
+    /* Modal */
+    .amd-modal { position: fixed; inset: 0; z-index: 100000; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.82); padding: 20px; }
+    .amd-modal.open { display: flex; }
+    .amd-modal .box { position: relative; max-width: 520px; width: 100%; max-height: 88vh; overflow-y: auto; background: linear-gradient(180deg,#0d0a07,#060403); border: 1px solid rgba(212,175,55,.4); border-radius: 16px; box-shadow: 0 24px 70px rgba(0,0,0,.7); padding: 38px 26px 28px; }
+    .amd-modal .x { position: absolute; top: 10px; right: 16px; cursor: pointer; font-size: 30px; line-height: 1; color: var(--gold-soft); user-select: none; }
+    .amd-modal .mcta { display: inline-flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-weight: 600; font-size: 14px; letter-spacing: 1.5px; color: #0d0a06; background: linear-gradient(135deg,#fbf0c4,#e6c56e,#b98d22); padding: 14px 40px; border-radius: 999px; box-shadow: 0 12px 34px rgba(212,175,55,.34); text-decoration: none; }
+    .amd-modal .mcta .wa { display: inline-flex; width: 22px; height: 22px; border-radius: 50%; background: #25d366; align-items: center; justify-content: center; margin-right: 10px; }
+    .amd-modal .mcta .wa svg { width: 14px; height: 14px; }
+    .corner { position: absolute; width: 22px; height: 22px; pointer-events: none; z-index: 3; }
+    .corner.tl { top: 8px; left: 8px; border-top: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); border-top-left-radius: 8px; }
+    .corner.tr { top: 8px; right: 8px; border-top: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); border-top-right-radius: 8px; }
+    .corner.bl { bottom: 8px; left: 8px; border-bottom: 1.5px solid var(--gold); border-left: 1.5px solid var(--gold); border-bottom-left-radius: 8px; }
+    .corner.br { bottom: 8px; right: 8px; border-bottom: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); border-bottom-right-radius: 8px; }
+    /* Footer */
+    footer { text-align: center; margin-top: 60px; padding: 30px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    footer .fbrand { font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 3px; color: var(--gold-bright); font-size: 16px; }
+    /* Floating WhatsApp */
+    .fab {
+      position: fixed; right: 20px; bottom: 22px; z-index: 90; width: 58px; height: 58px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #1a0f05, #000); border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 34px rgba(0,0,0,.6), 0 0 0 4px rgba(212,175,55,.14);
+    }
+    .fab svg { width: 30px; height: 30px; }
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+      .brand b { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="/">
+      <img src="/logo-md.jpg?v=20260709a" alt="Alta Magia Daniel">
+      <span style="line-height:1;"><b>ALTA MAGIA</b><span>DANIEL</span></span>
+    </a>
+    <a class="home-link" href="/">← Inicio</a>
+  </header>
+
+  <section class="hero">
+    <div class="kicker">LO QUE OFRECE</div>
+    <h1>Servicios</h1>
+    <p style="margin-top:20px;">Elegí el trabajo que necesitás. Atención seria, personalizada y con absoluta confidencialidad.</p>
+  </section>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <div class="fbrand">ALTA MAGIA DANIEL</div>
+    <div style="margin-top:6px;">Tarot y Trabajos Espirituales · Paraguay</div>
+    <div style="margin-top:12px; text-align:left;">© 2026 Alta Magia Daniel. Todos los derechos reservados.</div>
+    <div style="margin-top:12px;">Desarrollado por <a href="https://neura.com.py" target="_blank" rel="noopener" style="color:#e8c874; font-weight:600;">Neura</a></div>
+  </footer>
+
+  <a class="fab" href="https://wa.me/595972542230" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path fill="#f3d987" d="M16.02 5.33c-5.9 0-10.68 4.78-10.68 10.68 0 1.88.49 3.71 1.42 5.32L5.33 26.67l5.5-1.44a10.65 10.65 0 0 0 5.19 1.32c5.9 0 10.68-4.78 10.68-10.68S21.92 5.33 16.02 5.33Zm6.24 15.28c-.26.73-1.52 1.4-2.11 1.49-.54.08-1.22.12-1.96-.12-.45-.14-1.03-.33-1.77-.65-3.11-1.34-5.14-4.47-5.29-4.68-.15-.2-1.26-1.67-1.26-3.19s.8-2.27 1.09-2.58c.29-.31.62-.39.82-.39.21 0 .41 0 .59.01.19.01.44-.07.69.53.26.61.88 2.13.96 2.28.08.15.13.33.03.53-.1.2-.16.32-.31.5-.15.17-.32.39-.46.52-.15.15-.31.31-.13.61.18.31.79 1.31 1.7 2.12 1.17 1.04 2.16 1.37 2.47 1.52.31.15.49.13.67-.08.18-.2.77-.9.98-1.21.2-.31.41-.26.69-.15.29.11 1.81.86 2.12 1.01.31.16.51.23.59.36.08.14.08.79-.18 1.52Z"/></svg>
+  </a>
+
+  <div class="amd-modal" id="modal">
+    <div class="box">
+      <div class="x" role="button" aria-label="Cerrar">&times;</div>
+      <div id="modal-content"></div>
+      <div style="text-align:center; margin-top:22px;">
+        <a class="mcta" id="modal-cta" href="https://wa.me/595972542230" target="_blank" rel="noopener"><span class="wa"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M16.02 5.33c-5.9 0-10.68 4.78-10.68 10.68 0 1.88.49 3.71 1.42 5.32L5.33 26.67l5.5-1.44a10.65 10.65 0 0 0 5.19 1.32c5.9 0 10.68-4.78 10.68-10.68S21.92 5.33 16.02 5.33Zm6.24 15.28c-.26.73-1.52 1.4-2.11 1.49-.54.08-1.22.12-1.96-.12-.45-.14-1.03-.33-1.77-.65-3.11-1.34-5.14-4.47-5.29-4.68-.15-.2-1.26-1.67-1.26-3.19s.8-2.27 1.09-2.58c.29-.31.62-.39.82-.39.21 0 .41 0 .59.01.19.01.44-.07.69.53.26.61.88 2.13.96 2.28.08.15.13.33.03.53-.1.2-.16.32-.31.5-.15.17-.32.39-.46.52-.15.15-.31.31-.13.61.18.31.79 1.31 1.7 2.12 1.17 1.04 2.16 1.37 2.47 1.52.31.15.49.13.67-.08.18-.2.77-.9.98-1.21.2-.31.41-.26.69-.15.29.11 1.81.86 2.12 1.01.31.16.51.23.59.36.08.14.08.79-.18 1.52Z"/></svg></span>CONSULTAR</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var WA = 'https://wa.me/595972542230';
+    var SERVICES = [
+      { title: 'Maestro Daniel · Tarot y Energías', img: '/card-daniel.jpg?v=20260709d', desc: '¿Buscás abrir caminos hacia la prosperidad? Lecturas personalizadas, energías, apertura de caminos, orientación espiritual y amor. Atención seria y confidencial.' },
+      { title: 'Agenda tu Lectura de Tarot', img: '/card-agenda-tarot.jpg?v=20260709g', desc: 'Descubrí las respuestas que estás buscando. Disponible por videollamada o audio personalizado. Reservá tu turno.' },
+      { title: 'Destrabe y Apertura de Caminos', img: '/card-destrabe-maestro.jpg?v=20260710', desc: 'Rompe bloqueos económicos y abre caminos de prosperidad, oportunidades y estabilidad.' },
+      { title: 'Destrabe de Dinero', img: '/card-destrabe-altar.jpg?v=20260709c', desc: '¿Sientes que el dinero se estanca? Rompé bloqueos económicos, abrí caminos de prosperidad y protegé tu energía contra envidias y brujerías.' },
+      { title: 'Ritual de Alta Potencia', img: '/card-ritual.jpg?v=20260709e', desc: 'Riqueza, abundancia y poder. Activa caminos, rompe bloqueos y decreta prosperidad constante.' },
+      { title: 'Pacto · Cambia tu Vida', img: '/card-pacto.jpg?v=20260709e', desc: '¿Estás listo para el pacto y cambiar tu vida? Ritual poderoso para transformar tu destino.' },
+      { title: 'Liberación', img: '/card-liberacion.jpg?v=20260709e', desc: 'Renueva, abre y atrae. Rompé lo que te ata y abrí camino a la prosperidad.' },
+      { title: 'Endulzamiento Premium', img: '/card-endulzamiento-premium.jpg?v=20260709d', desc: 'Endulzamiento de dominio total: no vuelve igual… vuelve necesitado, obsesionado y completamente entregado a ti.' },
+      { title: 'Perfume Pomba Gira', img: '/card-pomba-gira.jpg?v=20260709d', desc: 'Perfume de Pomba Gira con feromonas — para atraer al hombre. Despierta atención, atrae hombres, irresistible y poderosa. 100 mL.' },
+      { title: 'Agenda Abierta', img: '/card-agenda.jpg?v=20260709c', desc: 'Lectura de cartas · Baños · Amuletos · Trabajos personalizados. Reservá tu consulta.' }
+    ];
+    var WA_SVG = '<span class="wa"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M16.02 5.33c-5.9 0-10.68 4.78-10.68 10.68 0 1.88.49 3.71 1.42 5.32L5.33 26.67l5.5-1.44a10.65 10.65 0 0 0 5.19 1.32c5.9 0 10.68-4.78 10.68-10.68S21.92 5.33 16.02 5.33Zm6.24 15.28c-.26.73-1.52 1.4-2.11 1.49-.54.08-1.22.12-1.96-.12-.45-.14-1.03-.33-1.77-.65-3.11-1.34-5.14-4.47-5.29-4.68-.15-.2-1.26-1.67-1.26-3.19s.8-2.27 1.09-2.58c.29-.31.62-.39.82-.39.21 0 .41 0 .59.01.19.01.44-.07.69.53.26.61.88 2.13.96 2.28.08.15.13.33.03.53-.1.2-.16.32-.31.5-.15.17-.32.39-.46.52-.15.15-.31.31-.13.61.18.31.79 1.31 1.7 2.12 1.17 1.04 2.16 1.37 2.47 1.52.31.15.49.13.67-.08.18-.2.77-.9.98-1.21.2-.31.41-.26.69-.15.29.11 1.81.86 2.12 1.01.31.16.51.23.59.36.08.14.08.79-.18 1.52Z"/></svg></span>';
+    function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    // Rich modal copy per service (same content shown on the homepage "Ver más detalles").
+    var RICH = {
+      'Destrabe y Apertura de Caminos':
+        '<div style="text-align:center; margin-bottom:14px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:2px; color:#cbbfa4;">¿SIENTES QUE EL</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:28px; letter-spacing:4px; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">DINERO</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:14px; letter-spacing:2px; color:#cbbfa4;">SE ESTANCA?</div>' +
+        '</div>' +
+        '<p style="font-size:14px; line-height:1.6; color:#cbbfa4; margin:0 0 16px; text-align:center;">Tu prosperidad puede estar <strong style="color:#f3d987;">bloqueada por energías, envidias o brujerías.</strong></p>' +
+        '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:16px; letter-spacing:1px; color:#f3d987; margin-bottom:12px; text-align:center;">Trabajo de Destrabe y Apertura de Caminos</div>' +
+        '<ul style="list-style:none; padding:0; margin:0 0 16px;">' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✅ Rompe bloqueos económicos</li>' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✅ Abre caminos de prosperidad</li>' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✅ Atrae dinero, oportunidades y estabilidad</li>' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✅ Protección contra envidias y malas energías</li>' +
+        '</ul>' +
+        '<p style="font-size:14px; line-height:1.6; color:#e8c874; font-style:italic; margin:0 0 16px; text-align:center;">Desbloquea tu energía, activa tu prosperidad y recibe todo lo que mereces.</p>' +
+        '<div style="display:flex; flex-direction:column; gap:8px; font-size:13px; letter-spacing:1px; color:#cbbfa4; border-top:1px solid rgba(212,175,55,.2); padding-top:14px;">' +
+          '<span>⭐ Trabajos personalizados</span><span>✔ Resultados comprobados</span><span>🔒 Confidencialidad absoluta</span>' +
+        '</div>',
+      'Destrabe de Dinero':
+        '<div style="text-align:center; margin-bottom:14px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:2px; color:#cbbfa4;">¿SIENTES QUE EL</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:28px; letter-spacing:4px; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">DINERO</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:14px; letter-spacing:2px; color:#cbbfa4;">SE ESTANCA?</div>' +
+        '</div>' +
+        '<p style="font-size:14px; line-height:1.6; color:#cbbfa4; margin:0 0 16px; text-align:center;">Tu prosperidad puede estar <strong style="color:#f3d987;">bloqueada por energías, envidias o brujerías.</strong></p>' +
+        '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:16px; letter-spacing:1px; color:#f3d987; margin-bottom:12px; text-align:center;">Trabajo de Destrabe y Apertura de Caminos</div>' +
+        '<ul style="list-style:none; padding:0; margin:0 0 16px;">' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✔ Rompe bloqueos económicos</li>' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✔ Abre caminos de prosperidad</li>' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✔ Atrae dinero, oportunidades y estabilidad</li>' +
+          '<li style="font-size:14px; line-height:1.8; color:#cbbfa4;">✔ Protección contra envidias y malas energías</li>' +
+        '</ul>' +
+        '<p style="font-size:14px; line-height:1.6; color:#e8c874; font-style:italic; margin:0 0 16px; text-align:center;">Desbloquea tu energía, activa tu prosperidad y recibe todo lo que mereces.</p>' +
+        '<div style="display:flex; flex-direction:column; gap:8px; font-size:13px; letter-spacing:1px; color:#cbbfa4; border-top:1px solid rgba(212,175,55,.2); padding-top:14px; margin-bottom:16px;">' +
+          '<span>⭐ Trabajos personalizados</span><span>✔ Resultados comprobados</span><span>🔒 Confidencialidad absoluta</span>' +
+        '</div>' +
+        '<p style="font-family:\'Cinzel\',serif; font-size:14px; letter-spacing:1px; line-height:1.6; color:#f3d987; text-align:center; margin:0;">TU CAMINO PUEDE CAMBIAR HOY.<br>ESTOY AQUÍ PARA AYUDARTE.</p>',
+      'Agenda Abierta':
+        '<div style="text-align:center; margin-bottom:18px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:26px; letter-spacing:2px; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">Buenos Días</div>' +
+        '</div>' +
+        '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:17px; letter-spacing:1px; color:#f3d987; text-align:center; margin-bottom:12px;">Agenda abierta para:</div>' +
+        '<ul style="list-style:none; padding:0; margin:0 0 18px; text-align:center;">' +
+          '<li style="font-size:16px; line-height:1.9; color:#cbbfa4;">Lectura de cartas</li>' +
+          '<li style="font-size:16px; line-height:1.9; color:#cbbfa4;">Baños</li>' +
+          '<li style="font-size:16px; line-height:1.9; color:#cbbfa4;">Amuletos</li>' +
+          '<li style="font-size:16px; line-height:1.9; color:#cbbfa4;">Trabajos</li>' +
+        '</ul>' +
+        '<div style="display:flex; flex-wrap:wrap; gap:10px 22px; justify-content:center; border-top:1px solid rgba(212,175,55,.2); padding-top:16px; font-family:\'Cinzel\',serif; font-weight:600; font-size:14px; letter-spacing:2px; color:#e8c874;">' +
+          '<span>✦ ABUNDANCIA</span><span>✦ ÉXITO</span><span>✦ PROSPERIDAD</span>' +
+        '</div>',
+      'Ritual de Alta Potencia':
+        '<div style="text-align:center; margin-bottom:12px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:30px; letter-spacing:3px; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">RITUAL</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:18px; letter-spacing:2px; color:#f3d987;">DE ALTA POTENCIA</div>' +
+        '</div>' +
+        '<div style="text-align:center; font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:2px; color:#e8c874; margin-bottom:18px;">RIQUEZA • ABUNDANCIA • PODER</div>' +
+        '<p style="font-size:15px; line-height:1.7; color:#cbbfa4; text-align:center; margin:0 0 16px;">El dinero fluye hacia mí sin límites, se multiplica, crece y se queda.</p>' +
+        '<p style="font-size:15px; line-height:1.7; color:#cbbfa4; text-align:center; margin:0 0 20px;">Activo caminos, rompo bloqueos y decreto prosperidad constante.</p>' +
+        '<div style="text-align:center; border-top:1px solid rgba(212,175,55,.2); padding-top:16px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:16px; letter-spacing:1px; color:#f3d987;">LA RIQUEZA ES MÍA.</div>' +
+          '<div style="font-family:\'Great Vibes\',cursive; font-size:26px; color:#e8c874; margin-top:2px;">Está hecho.</div>' +
+        '</div>',
+      'Pacto · Cambia tu Vida':
+        '<div style="text-align:center; padding:6px 0;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:30px; letter-spacing:2px; line-height:1.1; color:#e0342a; text-shadow:0 2px 14px rgba(224,52,42,.45);">¿ESTÁS LISTO</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:18px; letter-spacing:3px; color:#f3d987; margin:6px 0;">PARA EL</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:40px; letter-spacing:3px; line-height:1; color:#e0342a; text-shadow:0 2px 18px rgba(224,52,42,.5);">PACTO</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:16px; color:#f3d987; margin:10px 0 6px;">Y</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:26px; letter-spacing:2px; line-height:1.1; color:#e8c874;">CAMBIAR<br>TU VIDA</div>' +
+        '</div>',
+      'Liberación':
+        '<div style="text-align:center; margin-bottom:10px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:30px; letter-spacing:3px; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">LIBERACIÓN</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:3px; color:#cbbfa4;">ABRE CAMINO Y</div>' +
+          '<div style="font-family:\'Great Vibes\',cursive; font-size:34px; color:#e8c874; line-height:1.1;">Prosperidad</div>' +
+        '</div>' +
+        '<div style="text-align:center; font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:2px; color:#e8c874; border-top:1px solid rgba(212,175,55,.2); padding-top:16px; margin-top:6px;">RENUEVA • ABRE • ATRAE • PROSPERA</div>',
+      'Endulzamiento Premium':
+        '<div style="text-align:center; font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:2px; color:#e0607a; margin-bottom:12px;">🔥 ENDULZAMIENTO PREMIUM 🔥</div>' +
+        '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:24px; line-height:1.15; text-align:center; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:18px;">Endulzamiento de dominio total</div>' +
+        '<p style="font-size:16px; line-height:1.7; color:#cbbfa4; text-align:center; margin:0;">No vuelve igual… vuelve <strong style="color:#f3d987;">necesitado, obsesionado y completamente entregado a ti.</strong></p>',
+      'Perfume Pomba Gira':
+        '<div style="text-align:center; margin-bottom:6px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:3px; color:#cbbfa4;">PERFUME DE</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:30px; letter-spacing:2px; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">POMBA GIRA</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:12px; letter-spacing:3px; color:#e8c874;">CON FEROMONAS</div>' +
+        '</div>' +
+        '<p style="text-align:center; margin:10px 0 18px; color:#cbbfa4; font-size:14px;">Para <span style="font-family:\'Great Vibes\',cursive; font-size:24px; color:#e0607a;">Atraer Hombre</span> 🩷</p>' +
+        '<div style="text-align:center; border-top:1px solid rgba(212,175,55,.2); border-bottom:1px solid rgba(212,175,55,.2); padding:14px 0; margin-bottom:18px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:1px; color:#f3d987;">Boticario de Merlín</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:18px; letter-spacing:1px; color:#e0607a; margin-top:4px;">POMBA GIRA</div>' +
+          '<div style="font-size:12px; letter-spacing:2px; color:#cbbfa4;">CON FEROMONAS · 100 mL</div>' +
+        '</div>' +
+        '<div style="display:flex; flex-direction:column; gap:10px; font-size:14px; letter-spacing:1px; color:#cbbfa4;">' +
+          '<span>🩷 Despierta atención</span><span>👤 Atrae hombres</span><span>🔥 Irresistible y poderosa</span>' +
+        '</div>',
+      'Maestro Daniel · Tarot y Energías':
+        '<div style="text-align:center; margin-bottom:16px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:26px; letter-spacing:2px; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">MAESTRO DANIEL</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:3px; color:#e8c874;">TAROT Y ENERGÍAS</div>' +
+        '</div>' +
+        '<p style="font-size:15px; line-height:1.6; color:#f3d987; text-align:center; margin:0 0 16px;">¿Buscás abrir caminos hacia la prosperidad?<br>¿Deseás mejorar tu suerte y atraer abundancia?</p>' +
+        '<ul style="list-style:none; padding:0; margin:0 0 16px;">' +
+          '<li style="font-size:14px; line-height:1.9; color:#cbbfa4;">✨ Lecturas de Tarot personalizadas</li>' +
+          '<li style="font-size:14px; line-height:1.9; color:#cbbfa4;">✨ Energías para prosperidad y éxito</li>' +
+          '<li style="font-size:14px; line-height:1.9; color:#cbbfa4;">✨ Apertura de caminos</li>' +
+          '<li style="font-size:14px; line-height:1.9; color:#cbbfa4;">✨ Orientación espiritual para decisiones importantes</li>' +
+          '<li style="font-size:14px; line-height:1.9; color:#cbbfa4;">✨ Amor y caminos personales</li>' +
+        '</ul>' +
+        '<p style="font-size:14px; color:#e8c874; text-align:center; margin:0 0 16px;">🔥 Atención seria y confidencial</p>' +
+        '<p style="font-family:\'Great Vibes\',cursive; font-size:24px; color:#f3d987; text-align:center; border-top:1px solid rgba(212,175,55,.2); padding-top:16px; margin:0;">La prosperidad comienza con una buena guía ✨</p>',
+      'Agenda tu Lectura de Tarot':
+        '<div style="text-align:center; margin-bottom:8px;">' +
+          '<div style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:3px; color:#cbbfa4;">AGENDA TU</div>' +
+          '<div style="font-family:\'Cinzel\',serif; font-weight:800; font-size:30px; letter-spacing:2px; line-height:1.1; background:linear-gradient(180deg,#fbf0c4,#d4af37,#9a7418); -webkit-background-clip:text; background-clip:text; color:transparent;">LECTURA DE TAROT</div>' +
+        '</div>' +
+        '<p style="font-family:\'Cormorant Garamond\',serif; font-style:italic; font-size:16px; color:#cbbfa4; text-align:center; margin:0 0 18px;">Descubrí las respuestas que estás buscando</p>' +
+        '<div style="font-family:\'Cinzel\',serif; font-size:12px; letter-spacing:2px; color:#e8c874; text-align:center; margin-bottom:10px;">DISPONIBLE POR:</div>' +
+        '<div style="display:flex; flex-wrap:wrap; gap:8px 24px; justify-content:center; color:#cbbfa4; font-size:14px; margin-bottom:20px;">' +
+          '<span>🎥 Videollamada</span><span>🎙️ Audio personalizado</span>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">' +
+          '<div style="border:1px solid rgba(212,175,55,.35); border-radius:12px; padding:14px 8px; text-align:center;">' +
+            '<div style="font-family:\'Cinzel\',serif; font-size:12px; letter-spacing:1px; color:#cbbfa4;">LECTURA NORMAL</div>' +
+            '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:15px; color:#e8c874; margin-top:4px;">Consultar</div>' +
+          '</div>' +
+          '<div style="border:1px solid rgba(212,175,55,.35); border-radius:12px; padding:14px 8px; text-align:center;">' +
+            '<div style="font-family:\'Cinzel\',serif; font-size:12px; letter-spacing:1px; color:#cbbfa4;">LECTURA EXTENSA</div>' +
+            '<div style="font-family:\'Cinzel\',serif; font-weight:700; font-size:15px; color:#e8c874; margin-top:4px;">Consultar</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex; flex-wrap:wrap; gap:10px 20px; justify-content:center; font-size:13px; letter-spacing:1px; color:#e8c874; border-top:1px solid rgba(212,175,55,.2); padding-top:16px; margin-bottom:16px;">' +
+          '<span>🔮 Mensajes claros</span><span>🌸 Guía espiritual</span><span>👁 Orientación real</span>' +
+        '</div>' +
+        '<p style="font-family:\'Cinzel\',serif; font-size:13px; letter-spacing:2px; color:#f3d987; text-align:center; margin:0;">TU CAMINO, TU ELECCIÓN, TU PODER</p>'
+    };
+
+    var grid = document.getElementById('grid');
+    function renderServices(){
+      grid.innerHTML = '';
+      SERVICES.forEach(function(s){
+        var a = document.createElement('div');
+        a.className = 'card';
+        a.innerHTML =
+          '<div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>' +
+          '<div class="imgwrap"><img src="' + esc(s.img) + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async"></div>' +
+          '<div class="body">' +
+            '<h3>' + esc(s.title) + '</h3>' +
+            '<p>' + esc(s.desc) + '</p>' +
+            '<button type="button" class="details" data-title="' + esc(s.title) + '">Ver más detalles</button>' +
+          '</div>';
+        grid.appendChild(a);
+      });
+    }
+    window.renderServices = renderServices;
+    renderServices();
+
+    // Modal wiring
+    var modal = document.getElementById('modal');
+    var modalContent = document.getElementById('modal-content');
+    var modalCta = document.getElementById('modal-cta');
+    function openModal(title, desc){
+      var html = RICH[title] ||
+        ('<h3 style="font-family:\'Cinzel\',serif; font-weight:700; font-size:24px; letter-spacing:1px; color:#f3d987; text-align:center; margin-bottom:16px;">' + esc(title) + '</h3>' +
+         '<p style="font-size:16px; line-height:1.7; color:#cbbfa4; text-align:center;">' + esc(desc || '') + '</p>');
+      modalContent.innerHTML = html;
+      modalContent.parentNode.scrollTop = 0;
+      modalCta.href = WA + '?text=' + encodeURIComponent('Hola, me interesa el servicio: ' + title);
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){ modal.classList.remove('open'); document.body.style.overflow = ''; }
+    grid.addEventListener('click', function(e){
+      var btn = e.target.closest ? e.target.closest('.details') : null;
+      if (!btn) return;
+      var title = btn.getAttribute('data-title');
+      var card = btn.closest('.card');
+      var p = card ? card.querySelector('p') : null;
+      openModal(title, p ? p.textContent : '');
+    });
+    modal.querySelector('.x').addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+  </script>
+
+  <!-- Load live services from Supabase (falls back to the static list on error) -->
+  <script src="/supabase-config.js"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const cfg = window.AMD_SUPABASE || {};
+    if (cfg.url && cfg.anonKey && window.SERVICES && window.renderServices) {
+      try {
+        const sb = createClient(cfg.url, cfg.anonKey, { db: { schema: cfg.schema || 'altamagiadaniel' } });
+        const { data } = await sb.from('services')
+          .select('name,cover_image_url,short_description,full_description')
+          .eq('is_active', true).order('sort_order', { ascending: true });
+        if (data && data.length) {
+          const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          window.SERVICES.length = 0;
+          data.forEach(s => {
+            window.SERVICES.push({ title: s.name, img: s.cover_image_url || '', desc: s.short_description || '' });
+            if (s.full_description && !window.RICH[s.name]) {
+              window.RICH[s.name] = '<div style="font-size:16px;line-height:1.7;color:#cbbfa4;text-align:center;">'
+                + escHtml(s.full_description).replace(/\n/g,'<br>') + '</div>';
+            }
+          });
+          window.renderServices();
+        }
+      } catch (e) { /* keep the static fallback list */ }
+    }
+  </script>
+</body>
+</html>

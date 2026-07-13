@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-label="Ritual con dagas y pentagrama">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="60%" r="80%">
+      <stop offset="0%" stop-color="#1a0a05"/><stop offset="55%" stop-color="#0a0402"/><stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e394"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8a6a20"/>
+    </linearGradient>
+    <linearGradient id="blade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8a6a20"/><stop offset="50%" stop-color="#f7e394"/><stop offset="100%" stop-color="#8a6a20"/>
+    </linearGradient>
+    <linearGradient id="handle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2612"/><stop offset="100%" stop-color="#1a0e05"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity=".4"/><stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blood" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#7a1010"/><stop offset="100%" stop-color="#2a0505"/>
+    </radialGradient>
+    <symbol id="daga" viewBox="-20 -180 40 320">
+      <!-- hoja -->
+      <path d="M0,-180 L-10,-30 L0,-20 L10,-30 Z" fill="url(#blade)" stroke="#8a6a20" stroke-width=".4"/>
+      <path d="M0,-180 L0,-30" stroke="#f7e394" stroke-width=".5" opacity=".9"/>
+      <!-- guardia -->
+      <rect x="-20" y="-25" width="40" height="6" fill="url(#g)"/>
+      <circle cx="-18" cy="-22" r="2" fill="#f7e394"/><circle cx="18" cy="-22" r="2" fill="#f7e394"/>
+      <!-- mango -->
+      <rect x="-6" y="-18" width="12" height="90" fill="url(#handle)" stroke="url(#g)" stroke-width=".5"/>
+      <path d="M-6,0 L6,0 M-6,20 L6,20 M-6,40 L6,40 M-6,60 L6,60" stroke="url(#g)" stroke-width=".4" opacity=".7"/>
+      <!-- pomo -->
+      <circle cx="0" cy="82" r="10" fill="url(#g)" stroke="#8a6a20" stroke-width=".6"/>
+      <circle cx="0" cy="82" r="4" fill="#0a0503"/>
+    </symbol>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="800" cy="450" r="500" fill="url(#halo)"/>
+
+  <!-- Marco -->
+  <rect x="40" y="40" width="1520" height="820" fill="none" stroke="url(#g)" stroke-width="1" opacity=".7"/>
+
+  <!-- Estrellas -->
+  <g fill="#e8c874">
+    <circle cx="140" cy="120" r=".9" opacity=".55"/><circle cx="1460" cy="140" r="1" opacity=".6"/>
+    <circle cx="240" cy="240" r=".7" opacity=".45"/><circle cx="1360" cy="260" r=".8" opacity=".5"/>
+    <circle cx="80" cy="500" r=".8" opacity=".5"/><circle cx="1520" cy="520" r=".7" opacity=".45"/>
+  </g>
+
+  <!-- Círculo ritual con pentagrama invertido -->
+  <g transform="translate(800 450)">
+    <!-- Anillos externos -->
+    <circle r="320" fill="none" stroke="url(#g)" stroke-width="1" opacity=".55"/>
+    <circle r="310" fill="none" stroke="#d4af37" stroke-width=".3" opacity=".4" stroke-dasharray="3 6"/>
+    <circle r="270" fill="none" stroke="url(#g)" stroke-width="1.6" opacity=".85"/>
+    <circle r="265" fill="none" stroke="#d4af37" stroke-width=".3" opacity=".5"/>
+
+    <!-- Runas alrededor del anillo -->
+    <g fill="#e8c874" font-family="Georgia,serif" font-size="16" text-anchor="middle" opacity=".85">
+      <g transform="rotate(0)"><text y="-290">✦</text></g>
+      <g transform="rotate(36)"><text y="-290">☠</text></g>
+      <g transform="rotate(72)"><text y="-290">✦</text></g>
+      <g transform="rotate(108)"><text y="-290">☠</text></g>
+      <g transform="rotate(144)"><text y="-290">✦</text></g>
+      <g transform="rotate(180)"><text y="-290">☠</text></g>
+      <g transform="rotate(216)"><text y="-290">✦</text></g>
+      <g transform="rotate(252)"><text y="-290">☠</text></g>
+      <g transform="rotate(288)"><text y="-290">✦</text></g>
+      <g transform="rotate(324)"><text y="-290">☠</text></g>
+    </g>
+
+    <!-- Pentagrama -->
+    <polygon points="0,-230 54,-71 216,-71 85,33 135,190 0,95 -135,190 -85,33 -216,-71 -54,-71"
+             fill="none" stroke="url(#g)" stroke-width="2" opacity=".95"/>
+    <polygon points="0,-230 54,-71 216,-71 85,33 135,190 0,95 -135,190 -85,33 -216,-71 -54,-71"
+             fill="url(#g)" opacity=".08"/>
+
+    <!-- Círculo interior con gota de sangre -->
+    <circle r="60" fill="url(#blood)" stroke="url(#g)" stroke-width="1"/>
+    <path d="M0,-30 Q-15,-5 -15,10 Q-15,25 0,25 Q15,25 15,10 Q15,-5 0,-30 Z" fill="#a51818" opacity=".7"/>
+    <circle r="6" fill="#f7e394" opacity=".8"/>
+  </g>
+
+  <!-- 4 dagas apuntando al centro (cruz) -->
+  <g transform="translate(800 450)">
+    <g transform="translate(0 -410)"><use href="#daga" width="60" height="480" x="-30" y="0"/></g>
+    <g transform="translate(0 410) rotate(180)"><use href="#daga" width="60" height="480" x="-30" y="0"/></g>
+    <g transform="translate(-410 0) rotate(-90)"><use href="#daga" width="60" height="480" x="-30" y="0"/></g>
+    <g transform="translate(410 0) rotate(90)"><use href="#daga" width="60" height="480" x="-30" y="0"/></g>
+  </g>
+
+  <!-- Gotas de sangre bajo el círculo -->
+  <g fill="#8a1010" opacity=".8">
+    <path d="M760,760 Q750,780 760,795 Q770,780 760,760 Z"/>
+    <path d="M820,780 Q812,798 820,812 Q828,798 820,780 Z"/>
+    <path d="M790,800 Q784,815 790,825 Q796,815 790,800 Z"/>
+  </g>
+
+  <!-- Texto -->
+  <g text-anchor="middle" fill="#e8c874" font-family="Georgia,serif" opacity=".85">
+    <text x="800" y="840" font-size="14" letter-spacing="10">RITUAL · INVOCACIÓN</text>
+  </g>
+
+  <radialGradient id="v" cx="50%" cy="50%" r="80%"><stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".75"/></radialGradient>
+  <rect width="1600" height="900" fill="url(#v)"/>
+</svg>
